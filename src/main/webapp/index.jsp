@@ -9,5 +9,8 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="insertionAchat.jsp">achat</a>
+<a href="insertionCompteur.jsp">compteur</a>
+
 </body>
 </html>
