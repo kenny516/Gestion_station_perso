@@ -12,11 +12,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/achat.css">
-    <title>Formulaire</title>
+    <title>Achat Carburent Form</title>
 </head>
 <body>
 <div class="container">
-    <h1>Contact Form</h1>
+    <h1>Achat Carburent Form</h1>
     <form action="#" method="post">
         <label for="quantite">Quantité:</label>
         <input type="number" id="quantite" name="quantite" required>
@@ -27,9 +27,9 @@
         <label for="pompiste">Fournisseur:</label>
         <select id="pompiste" name="pompiste" required>
             <option value="" disabled selected>Select fournisseur</option>
-            <option value="pompiste1">Pompiste 1</option>
+            <option value="pompiste1">fournisseur 1</option>
             <option value="pompiste2">Fournisseur 2</option>
-            <option value="pompiste3">Pompiste 3</option>
+            <option value="pompiste3">fournisseur 3</option>
         </select>
 
         <label for="pompe">Pompe:</label>

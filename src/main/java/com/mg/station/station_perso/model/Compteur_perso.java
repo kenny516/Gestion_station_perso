@@ -12,10 +12,10 @@ public class Compteur_perso extends ClassEtat {
     Date daty;
     String heure;
     double compteur;
-    int idPompiste;
+    String idPompiste;
     String idPompe;
 
-    public Compteur_perso(String id, Date daty, String heure, double compteur, int idPompiste, String idPompe) {
+    public Compteur_perso(String id, Date daty, String heure, double compteur, String idPompiste, String idPompe) {
         this.setNomTable("COMPTEUR_PERSO");
         this.setId(id);
         this.setDaty(daty);
@@ -60,11 +60,11 @@ public class Compteur_perso extends ClassEtat {
         this.compteur = compteur;
     }
 
-    public int getIdPompiste() {
+    public String getIdPompiste() {
         return idPompiste;
     }
 
-    public void setIdPompiste(int idPompiste) {
+    public void setIdPompiste(String idPompiste) {
         this.idPompiste = idPompiste;
     }
 
@@ -87,7 +87,7 @@ public class Compteur_perso extends ClassEtat {
     }
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("CMPP", "GETSEQCOMPTEURPERSO");
+        this.preparePk("CMPP", "compteur_perso_seq");
         this.setId(makePK(c));
     }
 
@@ -96,6 +96,9 @@ public class Compteur_perso extends ClassEtat {
         Compteur_perso[] cps = (Compteur_perso[]) CGenUtil.rechercher(cp,null,null,c,"");
         return  cps;
     }
+
+
+    public
 
 
 }

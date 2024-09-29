@@ -1,7 +1,9 @@
 package com.mg.station.station_perso.controller;
 
+import com.mg.station.station_perso.model.Compteur_perso;
 import utilitaire.UtilDB;
 
+import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 
 @WebServlet(name = "InsertAchatServlet", value = "/insert-achat")
 public class InsertAchatServlet extends HttpServlet {
+    @EJB
+    MainEJB mainEJB;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,10 +27,12 @@ public class InsertAchatServlet extends HttpServlet {
 
         try {
             c = utilDB.GetConn();
-            String quantite = request.getParameter("quantite");
-            String date = request.getParameter("date");
+            double compteur = Double.parseDouble(request.getParameter("compteur"));
+            Date date = Date.valueOf(request.getParameter("date"));
             String fournisseur = request.getParameter("pompiste");
             String pompe = request.getParameter("pompe");
+
+            Compteur_perso compteur_perso = new Compteur_perso();
 
 
             print.println("Record inserted successfully.");

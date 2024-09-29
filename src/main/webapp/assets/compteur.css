@@ -1,64 +1,88 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f8ff; /* Light blue background */
+/* Base styles */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    min-height: 100vh;
+    background-color: #f5f5f5;
 }
 
 .container {
-    width: 400px; /* Fixed width for the form */
+    background-color: #fff;
     padding: 20px;
-    background-color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
+    font-size: 1.8rem;
     color: #333;
-    margin-bottom: 20px; /* Space below the title */
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
+    font-size: 1rem;
     color: #555;
+    text-align: left;
+    margin-bottom: 5px;
 }
 
-input[type="number"],
-input[type="date"],
-select {
-    width: 80%;
+input, select {
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px; /* Slightly rounded inputs */
-    transition: border-color 0.3s; /* Smooth transition for focus */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    width: 100%;
 }
 
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus {
-    border-color: #007bff; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff; /* Primary button color */
-    color: white;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
     border: none;
-    border-radius: 5px; /* Slightly rounded button */
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px; /* Increase button text size */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
+}
+
+@media (max-width: 500px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+    }
 }

@@ -1,9 +1,10 @@
 package com.mg.station.station_perso.controller;
 
 import com.mg.station.station_perso.model.Compteur_perso;
+import user.UserEJB;
 import utilitaire.UtilDB;
 
-
+import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
 
+    @EJB
+    UserEJB userEJB;
     private String message;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -22,6 +25,10 @@ public class HelloServlet extends HttpServlet {
         Connection c = null;
         try {
             c = utilDB.GetConn();
+
+
+            //Arrays.stream(userEJB.getAllTable()).forEach(print::println);
+
             Compteur_perso cmpPerso = new Compteur_perso();
             Compteur_perso[] cps = cmpPerso.getAll(c);
             for (Compteur_perso cp : cps) {
