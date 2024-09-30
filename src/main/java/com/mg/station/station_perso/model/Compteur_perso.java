@@ -98,7 +98,5 @@ public class Compteur_perso extends ClassEtat {
     }
 
 
-    public
-
 
 }

@@ -4,7 +4,6 @@ import com.mg.station.station_perso.model.Compteur_perso;
 import utilitaire.UtilDB;
 
 import javax.ejb.EJB;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 
-@WebServlet(name = "InsertAchatServlet", value = "/insert-achat")
 public class InsertAchatServlet extends HttpServlet {
     @EJB
     MainEJB mainEJB;
