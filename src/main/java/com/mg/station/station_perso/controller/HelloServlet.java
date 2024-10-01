@@ -1,6 +1,6 @@
 package com.mg.station.station_perso.controller;
 
-import com.mg.station.station_perso.model.Compteur_perso;
+import com.mg.station.station_perso.model.CompteurPerso;
 import user.UserEJB;
 import utilitaire.UtilDB;
 
@@ -9,7 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
@@ -29,8 +30,8 @@ public class HelloServlet extends HttpServlet {
 
             //Arrays.stream(userEJB.getAllTable()).forEach(print::println);
 
-            Compteur_perso cmpPerso = new Compteur_perso();
-            Compteur_perso[] cps = cmpPerso.getAll(c);
+            CompteurPerso cmpPerso = new CompteurPerso();
+            CompteurPerso[] cps = c(c);
             for (Compteur_perso cp : cps) {
                 print.println(cp.getDaty());
             }

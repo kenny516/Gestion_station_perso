@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+    <persistence-unit name="myPersistenceUnit">
+        <class>com.mg.station.station_perso.model.Produit</class>
+        <class>com.mg.station.station_perso.model.Fournisseur</class>
+        <class>com.mg.station.station_perso.model.AchatProduit</class>
+        <class>com.mg.station.station_perso.model.CompteurPerso</class>
+        <!-- Add other entity classes as needed -->
+
+        <properties>
+            <!-- Database connection settings -->
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+            <property name="javax.persistence.jdbc.user" value="kenny"/>
+            <property name="javax.persistence.jdbc.password" value="your_password"/>
+
+            <!-- Hibernate properties -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

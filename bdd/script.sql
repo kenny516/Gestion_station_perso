@@ -41,7 +41,7 @@ CREATE SEQUENCE compteur_perso_seq
 
 CREATE TABLE COMPTEUR_PERSO
 (
-    ID         varchar(255),
+    ID         varchar(255) PRIMARY KEY ,
     IDPOMPISTE varchar(255),
     IDPOMPE    varchar(255),
     IDCOMPTEUR varchar(255),
