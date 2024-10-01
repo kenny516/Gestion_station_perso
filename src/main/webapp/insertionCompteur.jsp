@@ -23,6 +23,7 @@
 <div class="container">
     <h1>Insertion compteur Form</h1>
     <form action="#" method="post">
+        <input type="hidden" name="current_page" value="Compteur">
         <label for="quantite">Compteur :</label>
         <input type="number" id="quantite" name="compteur" required>
 
