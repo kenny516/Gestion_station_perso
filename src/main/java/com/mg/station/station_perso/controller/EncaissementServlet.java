@@ -16,5 +16,11 @@ public class EncaissementServlet extends HttpServlet {
         double montantNorm = Double.parseDouble(req.getParameter("montantNorm"));
         double montant = Double.parseDouble(req.getParameter("montant"));
 
+        if (montantNorm - montant > 0){
+            resp.sendRedirect("Encaissement.jsp");
+        }else {
+
+        }
+
     }
 }
