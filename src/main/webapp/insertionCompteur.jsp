@@ -1,6 +1,6 @@
-<%@ page import="pompe.PompisteLib" %>
-<%@ page import="pompe.Pompe" %><%--
-  Created by IntelliJ IDEA.
+<%@ page import="com.mg.station.station_perso.model.Pompe" %>
+<%@ page import="com.mg.station.station_perso.model.Pompiste" %>
+Created by IntelliJ IDEA.
   User: kenny
   Date: 28/09/2024
   Time: 12:56
@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    PompisteLib[] pompisteLibs = (PompisteLib[]) request.getAttribute("pompistes");
+    Pompiste[] pompisteLibs = (Pompiste[]) request.getAttribute("pompistes");
     Pompe[] pompe = (Pompe[]) request.getAttribute("pompes");
 %>
 <!DOCTYPE html>
@@ -32,9 +32,9 @@
 
         <label for="pompiste">Pompiste:</label>
         <select id="pompiste" name="pompiste" required>
-            <% for (PompisteLib pompiste : pompisteLibs) { %>
-            <option value="<%= pompiste.getRefuser() %>">
-                <%= pompiste.getNomuser() %>
+            <% for (Pompiste pompiste : pompisteLibs) { %>
+            <option value="<%= pompiste.getId() %>">
+                <%= pompiste.getNom() %>
             </option>
             <% } %>
         </select>
@@ -43,7 +43,7 @@
         <select id="pompe" name="pompe" required>
             <% for (Pompe p : pompe) { %>
             <option value="<%= p.getId() %>">
-                <%= p.getVal() %>
+                <%= p.getLibelle() %>
             </option>
             <% } %>
         </select>

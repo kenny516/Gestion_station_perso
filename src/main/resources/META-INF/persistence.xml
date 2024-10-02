@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
-    <persistence-unit name="myPersistenceUnit">
+    <persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <!-- Entity classes -->
         <class>com.mg.station.station_perso.model.Produit</class>
         <class>com.mg.station.station_perso.model.Fournisseur</class>
         <class>com.mg.station.station_perso.model.AchatProduit</class>
         <class>com.mg.station.station_perso.model.CompteurPerso</class>
-        <!-- Add other entity classes as needed -->
+        <class>com.mg.station.station_perso.model.Pompe</class>
+        <class>com.mg.station.station_perso.model.Pompiste</class>
 
+        <!-- JDBC configuration -->
         <properties>
-            <!-- Database connection settings -->
+            <!-- JDBC connection properties -->
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/ORCL"/>
             <property name="javax.persistence.jdbc.user" value="kenny"/>
             <property name="javax.persistence.jdbc.password" value="your_password"/>
 
             <!-- Hibernate properties -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- Disable auto schema updates for production -->
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -22,19 +22,15 @@ public class CompteurPerso {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDPOMPISTE")
-    private com.mg.station.station_perso.model.Pompiste idpompiste;
+    private Pompiste pompiste;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDPOMPE")
-    private com.mg.station.station_perso.model.Pompe idpompe;
+    private Pompe pompe;
 
-    @Column(name = "IDCOMPTEUR")
-    private String idcompteur;
+    @Column(name = "COMPTEURNUM")
+    private Double compteurNum;
 
     @Column(name = "DATY")
     private LocalDate daty;
-
-    @Column(name = "IDUSER")
-    private String iduser;
-
 }

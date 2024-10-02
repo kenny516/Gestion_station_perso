@@ -1,11 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kenny
-  Date: 30/09/2024
-  Time: 21:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.mg.station.station_perso.model.CompteurPerso" %>
+<%
+    // Récupérer l'objet CompteurPerso depuis l'attribut de requête
+    CompteurPerso cmpP = (CompteurPerso) request.getAttribute("compteur");
+    double montantNormal = (double) request.getAttribute("montantNorm");
+ %>
 <html>
 <head>
     <title>Encaissement</title>
@@ -13,11 +11,17 @@
 <body>
 <div class="container">
     <h1>Insertion Encaissement Form</h1>
-    <form action="#" method="post">
+    <form action="EncaissementServlet" method="post">
         <input type="hidden" name="current_page" value="Encaissement">
+
+        <!-- Champs cachés pour les données du compteur -->
+        <input type="hidden" name="montantNorm" value="<%= montantNormal %>">
+        <input type="hidden" name="compteur_valeur" value="<%= cmpP.getDaty() %>">
+
         <label for="montant">Montant :</label>
         <input type="number" id="montant" name="montant" required>
         <button type="submit">Submit</button>
     </form>
+</div>
 </body>
 </html>

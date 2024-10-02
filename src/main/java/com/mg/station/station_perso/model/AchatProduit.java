@@ -22,11 +22,11 @@ public class AchatProduit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDPRODUIT")
-    private com.mg.station.station_perso.model.Produit idproduit;
+    private Produit produit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDFOURNISSEUR")
-    private com.mg.station.station_perso.model.Fournisseur idfournisseur;
+    private Fournisseur fournisseur;
 
     @Column(name = "QUANTITE")
     private Long quantite;

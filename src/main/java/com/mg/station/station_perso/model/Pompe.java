@@ -24,7 +24,6 @@ public class Pompe {
     @Column(name = "LIBELLE")
     private String libelle;
 
-    @OneToMany(mappedBy = "idpompe")
+    @OneToMany(mappedBy = "pompe")
     private Set<CompteurPerso> compteurPersos = new LinkedHashSet<>();
-
 }

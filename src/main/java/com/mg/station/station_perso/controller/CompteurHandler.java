@@ -1,28 +1,53 @@
 package com.mg.station.station_perso.controller;
 
+import com.mg.station.station_perso.model.CompteurPerso;
+import com.mg.station.station_perso.service.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+
 
 @WebServlet(name = "CompteurHandler", value = "/compteur-handler")
 public class CompteurHandler extends HttpServlet {
+
+    private ProduitService produitService;
+    private CompteurPersoService compteurPersoService;
+    private AchatProduitService achatProduitService;
+    private PompisteService pompisteService;
+    private PompeService pompeService;
+    private FournisseurService fournisseurService;
+
+    public CompteurHandler() {
+    }
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String current_page = req.getParameter("current_page");
-        if ("Compteur".equals(current_page)) {
 
-            // a faire lors de l entre du compteur par un pompiste
+        String idPompiste = req.getParameter("idPompiste");
+        String idPompe = req.getParameter("idPompe");
+        Double compteurNum = Double.valueOf(req.getParameter("compteurNum"));
+        LocalDate daty = LocalDate.parse(req.getParameter("daty"));
+        // build CompteurPerso object
+        CompteurPerso compteurPerso = new CompteurPerso();
+        compteurPerso.setPompiste(pompisteService.getPompisteById(idPompiste));
+        compteurPerso.setPompe(pompeService.getPompeById(idPompe));
+        compteurPerso.setCompteurNum(compteurNum);
+        compteurPerso.setDaty(daty);
 
-            req.getRequestDispatcher("compteur.jsp").forward(req, resp);
-        } else if ("Avoir".equals(current_page)) {
-            req.getRequestDispatcher("avoir.jsp").forward(req, resp);
-        } else if ("EncaissementAvoir".equals(current_page)) {
-            req.getRequestDispatcher("encaissementAvoir.jsp").forward(req, resp);
-        } else if ("Encaissement".equals(current_page)) {
-            req.getRequestDispatcher("encaissement.jsp").forward(req, resp);
+        if (compteurPersoService.sortie(compteurPerso.getPompiste())) {
+            req.setAttribute("compteur", compteurPerso);
+            double mtN = compteurPersoService.getEncaissementPompisteNormal(compteurPerso.getPompiste());
+            req.setAttribute("montantNorm",mtN);
+            resp.sendRedirect("Encaissement.jsp");
+        } else {
+            compteurPersoService.createCompteurPerso(compteurPerso);
         }
     }
 }

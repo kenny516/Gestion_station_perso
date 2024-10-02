@@ -24,7 +24,7 @@ public class Fournisseur {
     @Column(name = "NOM")
     private String nom;
 
-    @OneToMany(mappedBy = "idfournisseur")
-    private Set<AchatProduit> achatProduits = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "fournisseur")
+    private Set<AchatProduit> achatProduits;
 
 }
