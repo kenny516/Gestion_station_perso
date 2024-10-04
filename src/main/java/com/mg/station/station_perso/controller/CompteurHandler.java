@@ -1,12 +1,12 @@
 package com.mg.station.station_perso.controller;
 
+import com.mg.station.station_perso.DAO.CompteurDAO;
 import com.mg.station.station_perso.Database;
 import com.mg.station.station_perso.entity.Compteur;
 import com.mg.station.station_perso.entity.Pompe;
 import com.mg.station.station_perso.entity.Pompiste;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,13 +34,7 @@ public class CompteurHandler extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Start a transaction
-        EntityTransaction transaction = em.getTransaction();
-
         try {
-            // Begin the transaction
-            transaction.begin();
-
             // Extract data from the request
             String idPompiste = req.getParameter("pompiste");
             String idPompe = req.getParameter("pompe");
@@ -56,12 +50,8 @@ public class CompteurHandler extends HttpServlet {
             compteurPerso.setValeur(compteurNum);
             compteurPerso.setDate(datyHeure);
 
-            // Persist the entity
-            em.persist(compteurPerso);
-
-            // Commit the transaction
-            transaction.commit();
-
+            CompteurDAO compteurDAO = new CompteurDAO();
+            compteurDAO.create(compteurPerso);
             // Handle post-persistence logic
             if (compteurPerso.sortie(compteurPerso.getPompiste())) {
                 req.setAttribute("compteur", compteurPerso);
@@ -74,10 +64,6 @@ public class CompteurHandler extends HttpServlet {
             }
 
         } catch (Exception e) {
-            // Rollback the transaction if something goes wrong
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
             e.printStackTrace();  // Log the exception (you can replace this with proper logging)
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error occurred while saving the compteur.");
         }

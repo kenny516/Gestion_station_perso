@@ -1,5 +1,8 @@
 package com.mg.station.station_perso.controller;
 
+import com.mg.station.station_perso.Database;
+
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,8 @@ public class EncaissementServlet extends HttpServlet {
         String daty = req.getParameter("daty");
         double montantNorm = Double.parseDouble(req.getParameter("montantNorm"));
         double montant = Double.parseDouble(req.getParameter("montant"));
+
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
 
         if (montantNorm - montant > 0){
             req.setAttribute("montant", montantNorm - montant);
