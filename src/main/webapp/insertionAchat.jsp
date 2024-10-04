@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.mg.station.station_perso.entity.Pompe" %>
+<%@ page import="com.mg.station.station_perso.entity.Pompiste" %><%--
   Created by IntelliJ IDEA.
   User: kenny
   Date: 28/09/2024
@@ -6,18 +7,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Pompe[] pompe = (Pompe[]) request.getAttribute("pompes");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/achat.css">
+    <link href="assets/compteur.css">
     <title>Achat Carburent Form</title>
 </head>
 <body>
 <div class="container">
     <h1>Achat Carburent Form</h1>
-    <form action="#" method="post">
+    <form action="" method="post">
         <label for="quantite">Quantité:</label>
         <input type="number" id="quantite" name="quantite" required>
 
@@ -34,10 +38,11 @@
 
         <label for="pompe">Pompe:</label>
         <select id="pompe" name="pompe" required>
-            <option value="" disabled selected>Select Pompe</option>
-            <option value="pompe1">Pompe 1</option>
-            <option value="pompe2">Pompe 2</option>
-            <option value="pompe3">Pompe 3</option>
+            <% for (Pompe p : pompe) { %>
+            <option value="<%= p.getId() %>">
+                <%= p.getLibelle() %>
+            </option>
+            <% } %>
         </select>
 
         <button type="submit">Submit</button>

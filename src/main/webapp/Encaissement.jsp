@@ -7,6 +7,7 @@
 <head>
     <title>Encaissement</title>
 </head>
+<link href="assets/compteur.css">
 <body>
 <div class="container">
     <h1>Insertion Encaissement Form</h1>
