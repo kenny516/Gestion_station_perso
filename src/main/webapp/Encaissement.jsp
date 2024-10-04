@@ -1,7 +1,6 @@
-<%@ page import="com.mg.station.station_perso.model.CompteurPerso" %>
-<%
+<%@ page import="com.mg.station.station_perso.entity.Compteur" %><%
     // Récupérer l'objet CompteurPerso depuis l'attribut de requête
-    CompteurPerso cmpP = (CompteurPerso) request.getAttribute("compteur");
+    Compteur cmpP = (Compteur) request.getAttribute("compteur");
     double montantNormal = (double) request.getAttribute("montantNorm");
  %>
 <html>
@@ -16,7 +15,7 @@
 
         <!-- Champs cachés pour les données du compteur -->
         <input type="hidden" name="montantNorm" value="<%= montantNormal %>">
-        <input type="hidden" name="compteur_valeur" value="<%= cmpP.getDaty() %>">
+        <input type="hidden" name="compteur_valeur" value="<%= cmpP.getDate() %>">
 
         <label for="montant">Montant :</label>
         <input type="number" id="montant" name="montant" required>

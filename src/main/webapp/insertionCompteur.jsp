@@ -1,10 +1,9 @@
-<%@ page import="com.mg.station.station_perso.model.Pompe" %>
-<%@ page import="com.mg.station.station_perso.model.Pompiste" %>
-Created by IntelliJ IDEA.
-  User: kenny
-  Date: 28/09/2024
-  Time: 12:56
-  To change this template use File | Settings | File Templates.
+<%@ page import="com.mg.station.station_perso.entity.Pompiste" %>
+<%@ page import="com.mg.station.station_perso.entity.Pompe" %><%-- Created by IntelliJ IDEA.
+User: kenny
+Date: 28/09/2024
+Time: 12:56
+To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
@@ -22,13 +21,13 @@ Created by IntelliJ IDEA.
 <body>
 <div class="container">
     <h1>Insertion compteur Form</h1>
-    <form action="#" method="post">
+    <form action="compteurHandler" method="post">
         <input type="hidden" name="current_page" value="Compteur">
         <label for="quantite">Compteur :</label>
         <input type="number" id="quantite" name="compteur" required>
 
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+        <input type="datetime-local" id="date" name="date" required>
 
         <label for="pompiste">Pompiste:</label>
         <select id="pompiste" name="pompiste" required>
