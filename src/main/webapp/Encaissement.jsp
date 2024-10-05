@@ -1,7 +1,7 @@
 <%@ page import="com.mg.station.station_perso.entity.Compteur" %><%
     // Récupérer l'objet CompteurPerso depuis l'attribut de requête
     Compteur cmpP = (Compteur) request.getAttribute("compteur");
-    double montantNormal = (double) request.getAttribute("montantNorm");
+    double montantNormal = (double) request.getAttribute("montantRestant");
  %>
 <html>
 <head>
@@ -15,7 +15,7 @@
         <input type="hidden" name="current_page" value="Encaissement">
 
         <!-- Champs cachés pour les données du compteur -->
-        <input type="hidden" name="montantNorm" value="<%= montantNormal %>">
+        <input type="hidden" name="montantRestant" value="<%= montantNormal %>">
         <input type="hidden" name="compteur_valeur" value="<%= cmpP.getDate() %>">
 
         <label for="montant">Montant :</label>

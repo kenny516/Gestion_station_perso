@@ -1,11 +1,13 @@
 package com.mg.station.station_perso.controller;
 
+import EJBPERSO.StationServiceEJB;
 import com.mg.station.station_perso.DAO.CompteurDAO;
 import com.mg.station.station_perso.Database;
 import com.mg.station.station_perso.entity.Compteur;
 import com.mg.station.station_perso.entity.Pompe;
 import com.mg.station.station_perso.entity.Pompiste;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +22,8 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "CompteurHandler", value = "/compteurHandler")
 public class CompteurHandler extends HttpServlet {
+    @EJB
+    private StationServiceEJB stationService;
     private EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
 
     @Override
@@ -56,7 +60,8 @@ public class CompteurHandler extends HttpServlet {
             if (compteurPerso.sortie(compteurPerso.getPompiste())) {
                 req.setAttribute("compteur", compteurPerso);
                 double mtN = compteurPerso.getEncaissementNormal(compteurPerso.getPompiste());
-                req.setAttribute("montantNorm", mtN);
+                mtN = mtN * stationService.getGasoilPrixUnitaireVente();
+                req.setAttribute("montantRestant", mtN);
                 RequestDispatcher dispatcher = req.getRequestDispatcher("Encaissement.jsp");
                 dispatcher.forward(req, resp);  // Forward to the Encaissement.jsp page
             } else {

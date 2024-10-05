@@ -16,13 +16,13 @@ public class EncaissementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String daty = req.getParameter("daty");
-        double montantNorm = Double.parseDouble(req.getParameter("montantNorm"));
+        double montantRestant = Double.parseDouble(req.getParameter("montantRestant"));
         double montant = Double.parseDouble(req.getParameter("montant"));
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
 
-        if (montantNorm - montant > 0){
-            req.setAttribute("montant", montantNorm - montant);
+        if (montantRestant - montant > 0){
+            req.setAttribute("montantRestant", montantRestant - montant);
             resp.sendRedirect("NonEncaisser.jsp");
         }else {
             resp.sendRedirect("insertionCompteur.jsp");
