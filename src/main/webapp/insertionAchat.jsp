@@ -1,5 +1,6 @@
 <%@ page import="com.mg.station.station_perso.entity.Pompe" %>
-<%@ page import="com.mg.station.station_perso.entity.Pompiste" %><%--
+<%@ page import="com.mg.station.station_perso.entity.Pompiste" %>
+<%@ page import="faturefournisseur.Fournisseur" %><%--
   Created by IntelliJ IDEA.
   User: kenny
   Date: 28/09/2024
@@ -8,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Fournisseur[] fournisseurs = (Fournisseur[]) request.getAttribute("fournisseurs");
     Pompe[] pompe = (Pompe[]) request.getAttribute("pompes");
 %>
 <!DOCTYPE html>
@@ -31,9 +33,11 @@
         <label for="pompiste">Fournisseur:</label>
         <select id="pompiste" name="pompiste" required>
             <option value="" disabled selected>Select fournisseur</option>
-            <option value="pompiste1">fournisseur 1</option>
-            <option value="pompiste2">Fournisseur 2</option>
-            <option value="pompiste3">fournisseur 3</option>
+            <% for (Fournisseur f : fournisseurs) { %>
+            <option value="<%= f.getId() %>">
+                <%= f.getNom() %>
+            </option>
+            <% } %>
         </select>
 
         <label for="pompe">Pompe:</label>
