@@ -10,7 +10,7 @@
 </head>
 <body class="text-center">
 <div class="container mt-5">
-    <h1 class="mb-4">Hello World!</h1>
+    <h1 class="mb-4">WELCOME STATION PERSO!</h1>
     <div>
         <a href="hello-servlet" class="btn btn-primary m-2">Hello Servlet</a>
         <a href="insertionAchat.jsp" class="btn btn-primary m-2">Achat</a>

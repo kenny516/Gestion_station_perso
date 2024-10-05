@@ -10,6 +10,11 @@
         <class>com.mg.station.station_perso.entity.Pompe</class>
         <class>com.mg.station.station_perso.entity.Compteur</class>
         <class>com.mg.station.station_perso.entity.Cuve</class>
+        <class>com.mg.station.station_perso.entity.Vente</class>
+        <class>com.mg.station.station_perso.entity.Jauge</class>
+        <class>com.mg.station.station_perso.entity.CuveGraduation</class>
+
+
 
 
         <properties>

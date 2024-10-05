@@ -121,4 +121,40 @@ public class Compteur extends AbstractPrefixedIdEntity {
             em.close(); // Ensure the EntityManager is closed
         }
     }
+
+    public Compteur[] getCompteurFramesDateByPompe(Pompe pompe, LocalDateTime date) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            List<Compteur> compteurs = em.createQuery("SELECT c FROM Compteur c WHERE c.pompe = :pompe AND c.date = :date", Compteur.class)
+                    .setParameter("pompe", pompe)
+                    .setParameter("date", date)
+                    .getResultList();
+            return compteurs.toArray(new Compteur[0]);
+        } finally {
+            em.close(); // Ensure the EntityManager is closed
+        }
+    }
+
+    // a utiliser pour chercher la quantite par le compteur
+    public double getFuelSaleByDateByPompe(Pompe pompe, LocalDateTime date) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            String sql = "SELECT * FROM COMPTEUR c " +
+                    "WHERE c.ID_POMPE = :pompe AND  EXTRACT(YEAR FROM c.DATY) = EXTRACT(YEAR FROM :date) AND EXTRACT(MONTH FROM c.DATY) = EXTRACT(MONTH FROM :date) AND EXTRACT(DAY FROM C.DATY) = EXTRACT(DAY FROM :date)";
+
+            List compteurs = em.createNativeQuery(sql, Compteur.class)
+                    .setParameter("pompe", pompe.getId())
+                    .setParameter("date", date)
+                    .getResultList();
+
+            if (compteurs.size() == 2) {
+                return getFuelSale((Compteur) compteurs.get(1), (Compteur) compteurs.get(0));
+            }
+            return 0;
+        } finally {
+            em.close(); // Ensure the EntityManager is closed
+        }
+
+    }
+
 }

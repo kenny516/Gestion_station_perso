@@ -19,6 +19,9 @@ public class Vente extends AbstractPrefixedIdEntity {
     @JoinColumn(name = "ID_POMPE")
     private Pompe pompe;
 
+    @Column(name = "QUANTITE")
+    private double quantite;
+
     @Column(name = "MONTANT")
     private double montant;
 
@@ -28,12 +31,21 @@ public class Vente extends AbstractPrefixedIdEntity {
     public Vente() {
     }
 
-    public Vente(String id, String refClient, Pompe pompe, double montant, LocalDate date) {
+    public Vente(String id, String refClient, Pompe pompe, double quantite, double montant, LocalDate date) {
         this.id = id;
         this.refClient = refClient;
         this.pompe = pompe;
+        this.quantite = quantite;
         this.montant = montant;
         this.date = date;
+    }
+
+    public double getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(double quantite) {
+        this.quantite = quantite;
     }
 
     public String getId() {

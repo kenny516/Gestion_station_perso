@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 @WebServlet(name = "CompteurHandler", value = "/compteurHandler")
 public class CompteurHandler extends HttpServlet {
     @EJB
-    private StationServiceEJB stationService;
+    private StationServiceEJB stationServiceEJB;
     private EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
 
     @Override
@@ -42,7 +42,7 @@ public class CompteurHandler extends HttpServlet {
             // Extract data from the request
             String idPompiste = req.getParameter("pompiste");
             String idPompe = req.getParameter("pompe");
-            Double compteurNum = Double.valueOf(req.getParameter("compteur"));
+            double compteurNum = Double.parseDouble(req.getParameter("compteur"));
             String datySTR = req.getParameter("date");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime datyHeure = LocalDateTime.parse(datySTR, formatter);
@@ -58,16 +58,26 @@ public class CompteurHandler extends HttpServlet {
             compteurDAO.create(compteurPerso);
             // Handle post-persistence logic
             if (compteurPerso.sortie(compteurPerso.getPompiste())) {
-                req.setAttribute("compteur", compteurPerso);
-                double mtN = compteurPerso.getEncaissementNormal(compteurPerso.getPompiste());
-                mtN = mtN * stationService.getGasoilPrixUnitaireVente();
-                req.setAttribute("montantRestant", mtN);
+//                HttpSession session = req.getSession();
+//                session.setAttribute("compteur", compteurNum);
+
+                req.setAttribute("clients", stationServiceEJB.getClient());
+
+                req.setAttribute("date",datySTR);
+                req.setAttribute("RefMagasin",compteurPerso.getPompe().getCuve().getRef_magasin());
+                req.setAttribute("idPompe",idPompe);
+
+//                req.setAttribute("compteur", compteurPerso);
+                // ---quantite--- vendue
+                double quantiteRestante = compteurPerso.getEncaissementNormal(compteurPerso.getPompiste());
+                req.setAttribute("quantiteRestante", quantiteRestante);
+
+
                 RequestDispatcher dispatcher = req.getRequestDispatcher("Encaissement.jsp");
                 dispatcher.forward(req, resp);  // Forward to the Encaissement.jsp page
             } else {
                 resp.sendRedirect("compteurHandler");  // Redirect back to the form
             }
-
         } catch (Exception e) {
             e.printStackTrace();  // Log the exception (you can replace this with proper logging)
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error occurred while saving the compteur.");

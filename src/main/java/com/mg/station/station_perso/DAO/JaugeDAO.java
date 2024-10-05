@@ -1,20 +1,20 @@
 package com.mg.station.station_perso.DAO;
 
 import com.mg.station.station_perso.Database;
-import com.mg.station.station_perso.entity.Cuve;
+import com.mg.station.station_perso.entity.Jauge;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class CuveDAO {
+public class JaugeDAO {
 
-    public static void create(Cuve cuve) {
+    public void create(Jauge jauge) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.persist(cuve);
+            em.persist(jauge);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -26,30 +26,30 @@ public class CuveDAO {
         }
     }
 
-    public static Cuve read(String id) {
+    public Jauge read(String id) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            return em.find(Cuve.class, id);
+            return em.find(Jauge.class, id);
         } finally {
             em.close();
         }
     }
 
-    public static List<Cuve> readAll() {
+    public List<Jauge> readAll() {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            return em.createQuery("SELECT c FROM Cuve c", Cuve.class).getResultList();
+            return em.createQuery("SELECT j FROM Jauge j", Jauge.class).getResultList();
         } finally {
             em.close();
         }
     }
 
-    public static void update(Cuve cuve) {
+    public void update(Jauge jauge) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.merge(cuve);
+            em.merge(jauge);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -61,14 +61,14 @@ public class CuveDAO {
         }
     }
 
-    public static void delete(String id) {
+    public void delete(String id) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            Cuve cuve = em.find(Cuve.class, id);
-            if (cuve != null) {
-                em.remove(cuve);
+            Jauge jauge = em.find(Jauge.class, id);
+            if (jauge != null) {
+                em.remove(jauge);
             }
             transaction.commit();
         } catch (Exception e) {
