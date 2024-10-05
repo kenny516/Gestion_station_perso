@@ -46,27 +46,29 @@ public class AchatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Handle form submission
         String refFournisseur = req.getParameter("refFournisseur");
-        String idCuve = req.getParameter("idCuve");
+        String idPompe = req.getParameter("pompe");
         double quantite = Double.parseDouble(req.getParameter("quantite"));
-        double montant = Double.parseDouble(req.getParameter("montant"));
-        LocalDate daty = LocalDate.parse(req.getParameter("daty"));
+        LocalDate daty = LocalDate.parse(req.getParameter("date"));
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         AchatDAO achatDAO = new AchatDAO();
 
         try {
+            Pompe p = em.find(Pompe.class, idPompe);
+            Cuve c = p.getCuve();
             Achat achat = new Achat();
             achat.setRefFournisseur(refFournisseur);
-            achat.setCuve(em.find(Cuve.class, idCuve));
+            achat.setCuve(c);
             achat.setQuantite(quantite);
-            achat.setMontant(montant);
+            achat.setMontant(quantite * stationServiceEJB.getGasoilPrixUnitaireAchat());
             achat.setDaty(daty);
 
             achatDAO.create(achat);
+
+            stationServiceEJB.nouvelleFactureFOurnisseur(c.getRef_magasin(),achat.getMontant(),achat.getDaty());
         } finally {
             em.close();
         }
-
         resp.sendRedirect("success.jsp");
     }
 }

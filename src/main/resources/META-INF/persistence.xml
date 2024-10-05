@@ -13,6 +13,7 @@
         <class>com.mg.station.station_perso.entity.Vente</class>
         <class>com.mg.station.station_perso.entity.Jauge</class>
         <class>com.mg.station.station_perso.entity.CuveGraduation</class>
+        <class>com.mg.station.station_perso.entity.Achat</class>
 
 
 

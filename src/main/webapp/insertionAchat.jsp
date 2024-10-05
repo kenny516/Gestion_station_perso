@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/compteur.css">
+    <link rel="stylesheet" href="assets/compteur.css">
     <title>Achat Carburent Form</title>
 </head>
 <body>
@@ -30,8 +30,8 @@
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" required>
 
-        <label for="pompiste">Fournisseur:</label>
-        <select id="pompiste" name="pompiste" required>
+        <label for="refFournisseur">Fournisseur:</label>
+        <select id="refFournisseur" name="refFournisseur" required>
             <option value="" disabled selected>Select fournisseur</option>
             <% for (Fournisseur f : fournisseurs) { %>
             <option value="<%= f.getId() %>">

@@ -1,11 +1,13 @@
 package com.mg.station.station_perso.entity;
 
+import com.mg.station.station_perso.Database;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "ACHAT")
-public class Achat {
+public class Achat extends AbstractPrefixedIdEntity {
 
     @Id
     @Column(name = "ID")
@@ -80,5 +82,10 @@ public class Achat {
     public Achat setDaty(LocalDate daty) {
         this.daty = daty;
         return this;
+    }
+
+    @Override
+    protected void beforePersist() {
+        id = Database.generateId("ACH", "ID_ACHAT_SEQ");
     }
 }
