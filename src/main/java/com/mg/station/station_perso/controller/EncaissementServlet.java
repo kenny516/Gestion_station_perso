@@ -8,6 +8,7 @@ import com.mg.station.station_perso.entity.Vente;
 
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +31,7 @@ public class EncaissementServlet extends HttpServlet {
         LocalDate daty = LocalDate.from(LocalDateTime.parse((req.getParameter("daty"))));
         String RefMagasin = req.getParameter("RefMagasin");
         stationServiceEJB.nouvelleVenteCarburant(quantiteRestant, 14, "CLI000054",RefMagasin, daty);
-        resp.sendRedirect("insertionCompteur.jsp");
+        resp.sendRedirect("compteurHandler");
     }
 
     @Override
@@ -39,7 +40,7 @@ public class EncaissementServlet extends HttpServlet {
         String idCLient = req.getParameter("client");
         String idPompe = req.getParameter("idPompe");
         String refMagasin = req.getParameter("RefMagasin");
-        double quantiteRestant = Double.parseDouble(req.getParameter("quantiteRestant"));
+        double quantiteRestant = Double.parseDouble(req.getParameter("quantiteRestante"));
         double quantite = Double.parseDouble(req.getParameter("quantite"));
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -49,11 +50,12 @@ public class EncaissementServlet extends HttpServlet {
         vente.setPompe(em.find(Pompe.class, idPompe));
         vente.setQuantite(quantite);
         vente.setDate(daty);
+        vente.setMontant(quantite * stationServiceEJB.getGasoilPrixUnitaireVente());
         VenteDAO venteDAO = new VenteDAO();
         venteDAO.create(vente);
 
         if (quantiteRestant - quantite > 0) {
-            req.setAttribute("date", daty);
+            req.setAttribute("date",req.getParameter("daty"));
             req.setAttribute("RefMagasin",refMagasin);
             req.setAttribute("idPompe",idPompe);
             req.setAttribute("quantiteRestante", quantiteRestant - quantite);
@@ -63,8 +65,9 @@ public class EncaissementServlet extends HttpServlet {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            // redirection
-            resp.sendRedirect("Encaissement.jsp");
+            // redirect
+            RequestDispatcher dispatcher = req.getRequestDispatcher("Encaissement.jsp");
+            dispatcher.forward(req, resp);
         }else {
             resp.sendRedirect("compteurHandler");
         }

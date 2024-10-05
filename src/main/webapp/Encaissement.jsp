@@ -1,8 +1,5 @@
-<%@ page import="com.mg.station.station_perso.entity.Compteur" %>
 <%@ page import="client.Client" %>
-<%@ page import="com.mg.station.station_perso.entity.Pompiste" %>
 <%
-    // Récupérer l'objet CompteurPerso depuis l'attribut de requête
 
     Client[] clients = (Client[]) request.getAttribute("clients");
 
@@ -23,7 +20,7 @@
     <h1>Insertion Encaissement Form</h1>
     <form action="EncaissementServlet" method="post">
         <input type="hidden" name="current_page" value="Encaissement">
-        <input type="hidden" name="quantiteRestant" value="<%= quantiteRestante %>">
+        <input type="hidden" name="quantiteRestante" value="<%= quantiteRestante %>">
         <input type="hidden" name="daty" value="<%= date %>">
         <input type="hidden" name="idPompe" value="<%= idPompe %>">
         <input type="hidden" name="RefMagasin" value="<%= refMagasin %>">
@@ -41,6 +38,7 @@
         <input type="number" id="quantite" name="quantite" required>
         <button type="submit">Submit</button>
     </form>
+    <br>
     <a href="EncaissementServlet?RefMagasin=<%=refMagasin%>&quantiteRestant=<%=quantiteRestante%>&daty=<%=date%>">
         TOUT POUR DIVERS
     </a>
