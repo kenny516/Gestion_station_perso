@@ -16,18 +16,22 @@
 %>
 <html>
 <head>
-    <link rel="stylesheet" href="assets/compteur.css">
+    <link rel="stylesheet" href="../../assets/DetailJauge.css">
     <title>Detail cuve and compteur</title>
 </head>
 <body>
 <div>
     <h1>Detail cuve and compteur</h1>
 
-    <h2>JAUGE QT 1: <%= qtNormal1 %></h2>
-    <h2>JAUGE QT 2: <%= qtNormal2 %></h2>
+    <h2>JAUGE before : <%= qtNormal1 %>
+    </h2>
+    <h2>JAUGE after : <%= qtNormal2 %>
+    </h2>
 
-    <h2>QT normal :<%= qtNormal1-qtNormal2 %></h2>
-    <h2>Compteur QT: <%= compteurQT %></h2>
+    <h2>Quantite normalement vendu (By jauge) :<%= qtNormal1 - qtNormal2 %>
+    </h2>
+    <h2>Compteur Quantite : <%= compteurQT %>
+    </h2>
 
 
 </body>

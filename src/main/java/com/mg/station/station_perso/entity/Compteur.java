@@ -101,7 +101,6 @@ public class Compteur extends AbstractPrefixedIdEntity {
         } else {
             return (compteurSortie.getValeur() - compteurEntree.getValeur());
         }
-
     }
 
     public double getEncaissementNormal(Pompiste pompiste) {
