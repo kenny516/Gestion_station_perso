@@ -1,10 +1,12 @@
 package com.mg.station.station_perso.entity;
 
+import com.mg.station.station_perso.Database;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CUVE_GRADUATION")
-public class CuveGraduation {
+public class CuveGraduation extends AbstractPrefixedIdEntity {
 
     @Id
     @Column(name = "ID")
@@ -55,4 +57,9 @@ public class CuveGraduation {
         this.hauteur = hauteur;
         return this;
     }
+    @Override
+    protected void beforePersist() {
+        id = Database.generateId("CVG", "ID_CUVE_GRADUATION_SEQ");
+    }
+
 }

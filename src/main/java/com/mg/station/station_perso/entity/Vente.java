@@ -4,6 +4,7 @@ import com.mg.station.station_perso.Database;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "VENTE")
@@ -91,6 +92,27 @@ public class Vente extends AbstractPrefixedIdEntity {
     @Override
     protected void beforePersist() {
         id = Database.generateId("VENT", "ID_VENTE_SEQ");
-
     }
+
+    // get vente by year use entity manager
+    public static Vente[] getVenteByYear(LocalDate date) throws Exception {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        String query = "SELECT * FROM VENTE WHERE EXTRACT(YEAR FROM DATY) = " + date.getYear();
+        List ventes = em.createNativeQuery(query, Vente.class).getResultList();
+        return (Vente[]) ventes.toArray(new Vente[0]);
+    }
+
+    public static double getMontantVenteByYear(LocalDate date) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            String query = "SELECT SUM(montant) FROM VENTE WHERE EXTRACT(YEAR FROM daty) = :year";
+            Double sum = (Double) em.createNativeQuery(query)
+                    .setParameter("year", date.getYear())
+                    .getSingleResult();
+            return sum != null ? sum : 0;
+        } finally {
+            em.close();
+        }
+    }
+
 }

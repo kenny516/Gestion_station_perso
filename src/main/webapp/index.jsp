@@ -13,6 +13,9 @@
     <h1 class="mb-4">WELCOME STATION PERSO!</h1>
     <div>
         <a href="hello-servlet" class="btn btn-primary m-2">Hello Servlet</a>
+        <a href="" class="btn btn-primary m-2">Verif Annomalie Jauge</a>
+        <a href="cuveJauge" class="btn btn-primary m-2">Insertion Jauge</a>
+        <a href="dashboard" class="btn btn-primary m-2">Dashboard</a>
         <a href="AchatServlet" class="btn btn-primary m-2">Achat</a>
         <a href="compteurHandler" class="btn btn-primary m-2">Compteur</a>
     </div>

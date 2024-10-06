@@ -22,9 +22,17 @@ public class CuveJaugeServlet extends HttpServlet {
     private EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Pompe[] pompes = em.createQuery("FROM Pompe p", Pompe.class).getResultList().toArray(new Pompe[0]);
+        req.setAttribute("pompes", pompes);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("JaugeCarbu.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocalDate dateJauge = LocalDate.parse(req.getParameter("dateJauge"));
-        double jauge = Double.parseDouble(req.getParameter("jauge"));
+        double jauge = Double.parseDouble(req.getParameter("hauteur"));
 
         Pompe pompe = em.find(Pompe.class, req.getParameter("pompe"));
         Cuve cuve = pompe.getCuve();
@@ -33,10 +41,10 @@ public class CuveJaugeServlet extends HttpServlet {
                 .getResultList().toArray(new CuveGraduation[0]);
 
         double volumeCalc = cuve.getVolumeByHauteur(cuveGraduations, jauge);
-        req.setAttribute("cuveGraduation",cuveGraduations);
-        req.setAttribute("capaciteCalculer",volumeCalc);
-        req.setAttribute("hauteur",jauge);
-        req.setAttribute("dateJauge",dateJauge);
+        req.setAttribute("cuveGraduation", cuveGraduations);
+        req.setAttribute("capaciteCalculer", volumeCalc);
+        req.setAttribute("hauteur", jauge);
+        req.setAttribute("dateJauge", dateJauge);
 // creation de jauge
         Jauge jaugePerso = new Jauge();
         jaugePerso.setHauteurJauge(jauge);
@@ -47,18 +55,11 @@ public class CuveJaugeServlet extends HttpServlet {
         jaugeDAO.create(jaugePerso);
 // redirection vers details cuve
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DetailCuve.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("cuveJauge");
         dispatcher.forward(req, resp);
     }
 
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Pompe[] pompes = em.createQuery("FROM Pompe p", Pompe.class).getResultList().toArray(new Pompe[0]);
-        req.setAttribute("pompes", pompes);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("JaugeCarbu.jsp");
-        dispatcher.forward(req, resp);
-    }
 }
 
 

@@ -1,11 +1,13 @@
 package com.mg.station.station_perso.entity;
 
+import com.mg.station.station_perso.Database;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "JAUGE")
-public class Jauge {
+public class Jauge  extends AbstractPrefixedIdEntity{
 
     @Id
     @Column(name = "ID")
@@ -56,5 +58,10 @@ public class Jauge {
     public Jauge setPompe(Pompe pompe) {
         this.pompe = pompe;
         return this;
+    }
+
+    @Override
+    protected void beforePersist() {
+        id = Database.generateId("JG", "ID_JAUGE_SEQ");
     }
 }
