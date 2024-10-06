@@ -94,7 +94,7 @@ public class Compteur extends AbstractPrefixedIdEntity {
     }
 
 
-    public double getFuelSale(Compteur compteurEntree, Compteur compteurSortie) {
+    public static double getFuelSale(Compteur compteurEntree, Compteur compteurSortie) {
         double qunatite = 0;
         if (compteurEntree.getValeur() > compteurSortie.getValeur()){
             return (9999 + compteurSortie.getValeur() - compteurEntree.getValeur());
@@ -122,6 +122,24 @@ public class Compteur extends AbstractPrefixedIdEntity {
         }
     }
 
+    public double getEncaissementNormalByDate(Pompiste pompiste, LocalDateTime date) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            List<Compteur> compteurs = em.createQuery("SELECT c FROM Compteur c WHERE c.pompiste = :pompiste AND daty before :date ORDER BY c.date DESC", Compteur.class)
+                    .setParameter("pompiste", pompiste)
+                    .setParameter("date", date)
+                    .setMaxResults(2)
+                    .getResultList();
+
+            if (compteurs.size() == 2) {
+                return getFuelSale(compteurs.get(1), compteurs.get(0));
+            }
+            return 0;
+        } finally {
+            em.close(); // Ensure the EntityManager is closed
+        }
+    }
+
     public Compteur[] getCompteurFramesDateByPompe(Pompe pompe, LocalDateTime date) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
@@ -136,7 +154,7 @@ public class Compteur extends AbstractPrefixedIdEntity {
     }
 
     // a utiliser pour chercher la quantite par le compteur
-    public double getFuelSaleByDateByPompe(Pompe pompe, LocalDateTime date) {
+    public static double getFuelSaleByDateByPompe(Pompe pompe, LocalDateTime date) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
             String sql = "SELECT * FROM COMPTEUR c " +
@@ -154,7 +172,7 @@ public class Compteur extends AbstractPrefixedIdEntity {
         } finally {
             em.close(); // Ensure the EntityManager is closed
         }
-
     }
+
 
 }

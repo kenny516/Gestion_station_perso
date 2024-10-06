@@ -14,7 +14,7 @@
     <title>Menu pompe</title>
 </head>
 <body>
-<form action="cuveJauge" method="post">
+<form action="annomalie-detail" method="post">
     <input type="hidden" name="current_page" value="DetailCuveAndCompteur">
     <label for="pompe">Pompe:</label>
     <select id="pompe" name="pompe" required>
@@ -25,7 +25,7 @@
         <% } %>
     </select>
     <label for="date">Date:</label>
-    <input type="date" id="date" name="date" required>
+    <input type="datetime-local" id="date" name="date" required>
     <button type="submit">Submit</button>
 </form>
 

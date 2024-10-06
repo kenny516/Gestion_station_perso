@@ -55,7 +55,7 @@ public class CuveJaugeServlet extends HttpServlet {
         jaugeDAO.create(jaugePerso);
 // redirection vers details cuve
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("cuveJauge");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
         dispatcher.forward(req, resp);
     }
 
