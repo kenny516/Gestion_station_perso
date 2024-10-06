@@ -75,7 +75,7 @@ public static Jauge[] getTwoJaugesBeforeAndAfterDateByPompe(Pompe pompe, LocalDa
             .setParameter("date", date)
             .setMaxResults(2)
             .getResultList();
-    List<Jauge> afterList = em.createQuery("SELECT j FROM Jauge j WHERE j.pompe = :pompe AND j.daty > :date ORDER BY j.daty ASC", Jauge.class)
+    List<Jauge> afterList = em.createQuery("SELECT j FROM Jauge j WHERE j.pompe = :pompe AND j.daty >= :date ORDER BY j.daty ASC", Jauge.class)
             .setParameter("pompe", pompe)
             .setParameter("date", date)
             .setMaxResults(2)

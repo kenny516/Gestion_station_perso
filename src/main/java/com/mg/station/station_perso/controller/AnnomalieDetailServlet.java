@@ -36,15 +36,19 @@ public class AnnomalieDetailServlet extends HttpServlet {
 
         Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
 
-        CuveGraduation[] cuveGraduations = em.createQuery("FROM CuveGraduation cg WHERE cg.cuve = :cuve", CuveGraduation.class)
-                .setParameter("cuve", p.getCuve())
-                .getResultList().toArray(new CuveGraduation[0]);
 
-        Cuve c = new Cuve();
-        double qtNormal1 = c.getVolumeByHauteur(cuveGraduations, jauge[0].getHauteurJauge());
-        double qtNormal2 = c.getVolumeByHauteur(cuveGraduations, jauge[1].getHauteurJauge());
+
+        Cuve c = p.getCuve();
+
+        CuveGraduation[] j1 = c.getCuveGraduationBetween(jauge[0].getHauteurJauge());
+        CuveGraduation[] j2 = c.getCuveGraduationBetween(jauge[1].getHauteurJauge());
+
+        double qtNormal1 = c.getVolumeByHauteur(j1, jauge[0].getHauteurJauge());
+        double qtNormal2 = c.getVolumeByHauteur(j2  , jauge[1].getHauteurJauge());
 
         double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
+
+
         req.setAttribute("qtNormal1", qtNormal1);
         req.setAttribute("qtNormal2", qtNormal2);
         req.setAttribute("compteurQT", compteurQT);

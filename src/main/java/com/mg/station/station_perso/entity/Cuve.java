@@ -3,6 +3,7 @@ package com.mg.station.station_perso.entity;
 import com.mg.station.station_perso.Database;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -75,34 +76,51 @@ public class Cuve extends AbstractPrefixedIdEntity {
     //function calculate the volume of fuel in cuve by Height of cuve
     public CuveGraduation[] getCuveGraduationBetween(double hauteur) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
-        String query = "SELECT * FROM (" +
-                "   SELECT * FROM (" +
-                "       SELECT c.* FROM CUVE_GRADUATION c " +
-                "       WHERE c.ID_CUVE = :cuveId AND c.hauteur < :hauteur " +
-                "       ORDER BY c.hauteur DESC " +
-                "   ) WHERE ROWNUM = 1 " +
-                "   UNION ALL " +
-                "   SELECT * FROM (" +
-                "       SELECT c.* FROM CUVE_GRADUATION c " +
-                "       WHERE c.ID_CUVE = :cuveId AND c.hauteur > :hauteur " +
-                "       ORDER BY c.hauteur ASC " +
-                "   ) WHERE ROWNUM = 1 " +
-                ") cuveGraduations";
+        List<CuveGraduation> result = new ArrayList<>(); // Use generics for type safety
 
-        List graduations = em.createNativeQuery(query, CuveGraduation.class)
-                .setParameter("cuveId", this.getId())  // Assuming your cuve has an ID field
-                .setParameter("hauteur", hauteur)
-                .getResultList();
+        try {
 
-        em.close(); // Close the EntityManager to avoid resource leaks
+            // First Query: Get closest graduation below the specified hauteur
+            String queryBefore = "SELECT * FROM (" +
+                    "   SELECT c.* FROM CUVE_GRADUATION c " +
+                    "   WHERE c.ID_CUVE = :cuveId AND c.hauteur < :hauteur " +
+                    "   ORDER BY c.hauteur DESC " +
+                    ") WHERE ROWNUM = 1";
 
-        // Check if there are enough results before accessing the list
-        if (graduations.isEmpty()) {
-            throw new IllegalArgumentException("No graduation found for the given hauteur.");
+            List beforeGraduations = em.createNativeQuery(queryBefore, CuveGraduation.class)
+                    .setParameter("cuveId", this.getId())
+                    .setParameter("hauteur", hauteur)
+                    .getResultList();
+
+            if (!beforeGraduations.isEmpty()) {
+                result.add((CuveGraduation) beforeGraduations.get(0)); // Assign the found graduation below
+            }
+
+            // Second Query: Get closest graduation above the specified hauteur
+            String queryAfter = "SELECT * FROM (" +
+                    "   SELECT c.* FROM CUVE_GRADUATION c " +
+                    "   WHERE c.ID_CUVE = :cuveId AND c.hauteur > :hauteur " +
+                    "   ORDER BY c.hauteur ASC " +
+                    ") WHERE ROWNUM = 1";
+
+            List afterGraduations = em.createNativeQuery(queryAfter, CuveGraduation.class)
+                    .setParameter("cuveId", this.getId())
+                    .setParameter("hauteur", hauteur)
+                    .getResultList();
+
+            if (!afterGraduations.isEmpty()) {
+                result.add((CuveGraduation) afterGraduations.get(0)); // Assign the found graduation above
+            }
+
+        } catch (Exception e) {
+            // Log specific exceptions here
+            // Example: Logger.log("Error retrieving cuve graduations: " + e.getMessage());
+            throw new RuntimeException("Error retrieving cuve graduations: " + e.getMessage(), e);
+        } finally {
+            em.close(); // Ensure the EntityManager is closed
         }
 
-        // Interpolate volume or any additional logic you need
-        return (CuveGraduation[]) graduations.toArray(new CuveGraduation[0]);
+        return result.toArray(new CuveGraduation[0]); // Return the array containing both graduations
     }
 
 

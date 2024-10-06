@@ -162,7 +162,7 @@ public class Compteur extends AbstractPrefixedIdEntity {
                     "AND EXTRACT(MONTH FROM c.date) = EXTRACT(MONTH FROM :date) " +
                     "AND EXTRACT(DAY FROM c.date) <= EXTRACT(DAY FROM :date) ORDER BY c.date DESC";
             List compteurs = em.createQuery(sql, Compteur.class)
-                    .setParameter("pompe", pompçeç.getId())
+                    .setParameter("pompe", pompe)
                     .setParameter("date", date)
                     .setMaxResults(2)
                     .getResultList();
@@ -172,7 +172,7 @@ public class Compteur extends AbstractPrefixedIdEntity {
             }
             return 0;
         } finally {
-            em.close(); // Ensure the EntityManager is closed
+            em.close();
         }
     }
 
