@@ -96,10 +96,9 @@ public class Compteur extends AbstractPrefixedIdEntity {
 
     public static double getFuelSale(Compteur compteurEntree, Compteur compteurSortie) {
         double qunatite = 0;
-        if (compteurEntree.getValeur() > compteurSortie.getValeur()){
+        if (compteurEntree.getValeur() > compteurSortie.getValeur()) {
             return (9999 + compteurSortie.getValeur() - compteurEntree.getValeur());
-        }
-        else {
+        } else {
             return (compteurSortie.getValeur() - compteurEntree.getValeur());
         }
 
@@ -125,20 +124,21 @@ public class Compteur extends AbstractPrefixedIdEntity {
     public double getEncaissementNormalByDate(Pompiste pompiste, LocalDateTime date) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            List<Compteur> compteurs = em.createQuery("SELECT c FROM Compteur c WHERE c.pompiste = :pompiste AND daty before :date ORDER BY c.date DESC", Compteur.class)
+            List<Compteur> compteurs = em.createQuery("SELECT c FROM Compteur c WHERE c.pompiste = :pompiste AND c.date < :date ORDER BY c.date DESC", Compteur.class)
                     .setParameter("pompiste", pompiste)
                     .setParameter("date", date)
                     .setMaxResults(2)
                     .getResultList();
 
             if (compteurs.size() == 2) {
-                return getFuelSale(compteurs.get(1), compteurs.get(0));
+                return getFuelSale(compteurs.get(1), compteurs.get(0)); // Calculate fuel sale difference
             }
             return 0;
         } finally {
-            em.close(); // Ensure the EntityManager is closed
+            em.close();
         }
     }
+
 
     public Compteur[] getCompteurFramesDateByPompe(Pompe pompe, LocalDateTime date) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -157,12 +157,14 @@ public class Compteur extends AbstractPrefixedIdEntity {
     public static double getFuelSaleByDateByPompe(Pompe pompe, LocalDateTime date) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            String sql = "SELECT * FROM COMPTEUR c " +
-                    "WHERE c.ID_POMPE = :pompe AND  EXTRACT(YEAR FROM c.DATY) = EXTRACT(YEAR FROM :date) AND EXTRACT(MONTH FROM c.DATY) = EXTRACT(MONTH FROM :date) AND EXTRACT(DAY FROM C.DATY) = EXTRACT(DAY FROM :date)";
-
-            List compteurs = em.createNativeQuery(sql, Compteur.class)
-                    .setParameter("pompe", pompe.getId())
+            String sql = "SELECT c FROM Compteur c " +
+                    "WHERE c.pompe = :pompe AND EXTRACT(YEAR FROM c.date) = EXTRACT(YEAR FROM :date) " +
+                    "AND EXTRACT(MONTH FROM c.date) = EXTRACT(MONTH FROM :date) " +
+                    "AND EXTRACT(DAY FROM c.date) <= EXTRACT(DAY FROM :date) ORDER BY c.date DESC";
+            List compteurs = em.createQuery(sql, Compteur.class)
+                    .setParameter("pompe", pompçeç.getId())
                     .setParameter("date", date)
+                    .setMaxResults(2)
                     .getResultList();
 
             if (compteurs.size() == 2) {

@@ -4,10 +4,12 @@ import com.mg.station.station_perso.Database;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "JAUGE")
-public class Jauge  extends AbstractPrefixedIdEntity{
+public class Jauge extends AbstractPrefixedIdEntity {
 
     @Id
     @Column(name = "ID")
@@ -64,4 +66,24 @@ public class Jauge  extends AbstractPrefixedIdEntity{
     protected void beforePersist() {
         id = Database.generateId("JG", "ID_JAUGE_SEQ");
     }
+
+// get two jauges before and after date by pompe
+public static Jauge[] getTwoJaugesBeforeAndAfterDateByPompe(Pompe pompe, LocalDate date) {
+    EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+    List<Jauge> beforeList = em.createQuery("SELECT j FROM Jauge j WHERE j.pompe = :pompe AND j.daty < :date ORDER BY j.daty DESC", Jauge.class)
+            .setParameter("pompe", pompe)
+            .setParameter("date", date)
+            .setMaxResults(2)
+            .getResultList();
+    List<Jauge> afterList = em.createQuery("SELECT j FROM Jauge j WHERE j.pompe = :pompe AND j.daty > :date ORDER BY j.daty ASC", Jauge.class)
+            .setParameter("pompe", pompe)
+            .setParameter("date", date)
+            .setMaxResults(2)
+            .getResultList();
+    em.close();
+    List<Jauge> resultList = new ArrayList<>();
+    resultList.addAll(beforeList);
+    resultList.addAll(afterList);
+    return resultList.toArray(new Jauge[0]);
+}
 }

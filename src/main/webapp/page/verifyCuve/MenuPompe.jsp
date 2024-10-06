@@ -11,10 +11,11 @@
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="assets/compteur.css">
     <title>Menu pompe</title>
 </head>
 <body>
-<form action="annomalie-detail" method="post">
+<form action="annomalieDetail" method="post">
     <input type="hidden" name="current_page" value="DetailCuveAndCompteur">
     <label for="pompe">Pompe:</label>
     <select id="pompe" name="pompe" required>
@@ -27,6 +28,7 @@
     <label for="date">Date:</label>
     <input type="datetime-local" id="date" name="date" required>
     <button type="submit">Submit</button>
+    <button><a href="index.jsp">Home</a></button>
 </form>
 
 </body>

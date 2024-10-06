@@ -118,7 +118,6 @@ public class Cuve extends AbstractPrefixedIdEntity {
         return volume;
     }
 
-    public 
 
     public static double interpolateVolume(double height, double[] heights, double[] volumes) {
         for (int i = 0; i < heights.length - 1; i++) {

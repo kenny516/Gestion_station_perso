@@ -1,10 +1,10 @@
 package com.mg.station.station_perso.controller;
 
 import com.mg.station.station_perso.Database;
-import com.mg.station.station_perso.entity.Compteur;
-import com.mg.station.station_perso.entity.Pompe;
+import com.mg.station.station_perso.entity.*;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,27 +14,43 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@WebServlet(name = "AnnomalieDetailServlet", urlPatterns = "/annomalie-detail")
+@WebServlet(name = "AnnomalieDetailServlet", urlPatterns = "/annomalieDetail")
 public class AnnomalieDetailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        Pompe[] pompes = em.createQuery("FROM Pompe p", Pompe.class).getResultList().toArray(new Pompe[0]);
+        req.setAttribute("pompes", pompes);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("page/verifyCuve/MenuPompe.jsp");
+        dispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idPompe = req.getParameter("pompe");
-        LocalDateTime date = LocalDate.parse(req.getParameter("date")).atStartOfDay();
+        LocalDateTime date = LocalDateTime.parse((req.getParameter("date")));
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         Pompe p = em.find(Pompe.class, idPompe);
-         Compteur.getFuelSaleByDateByPompe(p, date);
+
+        Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
+
+        CuveGraduation[] cuveGraduations = em.createQuery("FROM CuveGraduation cg WHERE cg.cuve = :cuve", CuveGraduation.class)
+                .setParameter("cuve", p.getCuve())
+                .getResultList().toArray(new CuveGraduation[0]);
+
+        Cuve c = new Cuve();
+        double qtNormal1 = c.getVolumeByHauteur(cuveGraduations, jauge[0].getHauteurJauge());
+        double qtNormal2 = c.getVolumeByHauteur(cuveGraduations, jauge[1].getHauteurJauge());
+
+        double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
+        req.setAttribute("qtNormal1", qtNormal1);
+        req.setAttribute("qtNormal2", qtNormal2);
+        req.setAttribute("compteurQT", compteurQT);
 
 
-
-
-
-
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("page/verifyCuve/DetailCuveAndCompteur.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }
