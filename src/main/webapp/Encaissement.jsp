@@ -37,6 +37,7 @@
         <label for="quantite">Quantite :</label>
         <input type="number" id="quantite" name="quantite" required>
         <button type="submit">Submit</button>
+        <button><a href="index.jsp">Home</a></button>
     </form>
     <br>
     <a href="EncaissementServlet?RefMagasin=<%=refMagasin%>&quantiteRestant=<%=quantiteRestante%>&daty=<%=date%>">
