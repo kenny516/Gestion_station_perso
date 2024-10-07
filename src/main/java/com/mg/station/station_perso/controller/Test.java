@@ -34,22 +34,22 @@ public class Test extends HttpServlet {
         Pompe p = em.find(Pompe.class, "PMP1");
         double cmp = Compteur.getFuelSaleByDateByPompe(p,date);
 
-        Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
+        PrelevementCuve[] prelevementCuve = PrelevementCuve.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
 
-        resp.getWriter().println("j0 "+jauge[0].getHauteurJauge()+"\n");
-        resp.getWriter().println("j1 "+jauge[1].getHauteurJauge()+"\n");
+        resp.getWriter().println("j0 "+ prelevementCuve[0].getHauteurJauge()+"\n");
+        resp.getWriter().println("j1 "+ prelevementCuve[1].getHauteurJauge()+"\n");
 
         Cuve c = p.getCuve();
 
 
-        GraduationCuve[] j1 = c.getCuveGraduationBetween(jauge[0].getHauteurJauge());
-        GraduationCuve[] j2 = c.getCuveGraduationBetween(jauge[1].getHauteurJauge());
+        GraduationCuve[] j1 = c.getCuveGraduationBetween(prelevementCuve[0].getHauteurJauge());
+        GraduationCuve[] j2 = c.getCuveGraduationBetween(prelevementCuve[1].getHauteurJauge());
 
         resp.getWriter().println("j1 "+j1.length+"\n");
         resp.getWriter().println("j2 "+j2.length+"\n");
 
-        double qtNormal1 = c.getVolumeByHauteur(j1, jauge[0].getHauteurJauge());
-        double qtNormal2 = c.getVolumeByHauteur(j2, jauge[1].getHauteurJauge());
+        double qtNormal1 = c.getVolumeByHauteur(j1, prelevementCuve[0].getHauteurJauge());
+        double qtNormal2 = c.getVolumeByHauteur(j2, prelevementCuve[1].getHauteurJauge());
 
 
 

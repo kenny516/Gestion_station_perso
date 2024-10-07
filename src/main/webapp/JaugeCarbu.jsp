@@ -12,7 +12,7 @@
 
 <html>
 <head>
-    <title>Garbu jauge</title>
+    <title>Garbu prelevementCuve</title>
 </head>
 <link rel="stylesheet" href="assets/compteur.css">
 <body>
@@ -25,9 +25,9 @@
         </option>
         <% } %>
     </select>
-    <label for="dateJauge">Date de jauge</label>
+    <label for="dateJauge">Date de prelevementCuve</label>
     <input type="date" id="dateJauge" name="dateJauge">
-    <label for="hauteur">Hauteur jauge</label>
+    <label for="hauteur">Hauteur prelevementCuve</label>
     <input type="number" id="hauteur" name="hauteur">
     <button type="submit">Submit</button>
 </form>

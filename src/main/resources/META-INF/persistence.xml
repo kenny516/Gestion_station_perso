@@ -12,7 +12,7 @@
         <class>com.mg.station.station_perso.entity.Compteur</class>
         <class>com.mg.station.station_perso.entity.Cuve</class>
         <class>com.mg.station.station_perso.entity.Vente</class>
-        <class>com.mg.station.station_perso.entity.Jauge</class>
+        <class>com.mg.station.station_perso.entity.PrelevementCuve</class>
         <class>com.mg.station.station_perso.entity.GraduationCuve</class>
         <class>com.mg.station.station_perso.entity.Achat</class>
 

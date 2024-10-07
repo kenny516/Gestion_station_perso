@@ -34,17 +34,17 @@ public class AnnomalieDetailServlet extends HttpServlet {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         Pompe p = em.find(Pompe.class, idPompe);
 
-        Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
+        PrelevementCuve[] prelevementCuve = PrelevementCuve.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
 
 
 
         Cuve c = p.getCuve();
 
-        GraduationCuve[] j1 = c.getCuveGraduationBetween(jauge[0].getHauteurJauge());
-        GraduationCuve[] j2 = c.getCuveGraduationBetween(jauge[1].getHauteurJauge());
+        GraduationCuve[] j1 = c.getCuveGraduationBetween(prelevementCuve[0].getHauteurJauge());
+        GraduationCuve[] j2 = c.getCuveGraduationBetween(prelevementCuve[1].getHauteurJauge());
 
-        double qtNormal1 = c.getVolumeByHauteur(j1, jauge[0].getHauteurJauge());
-        double qtNormal2 = c.getVolumeByHauteur(j2  , jauge[1].getHauteurJauge());
+        double qtNormal1 = c.getVolumeByHauteur(j1, prelevementCuve[0].getHauteurJauge());
+        double qtNormal2 = c.getVolumeByHauteur(j2  , prelevementCuve[1].getHauteurJauge());
 
         double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
 

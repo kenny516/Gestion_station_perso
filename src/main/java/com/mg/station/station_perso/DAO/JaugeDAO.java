@@ -1,7 +1,7 @@
 package com.mg.station.station_perso.DAO;
 
 import com.mg.station.station_perso.Database;
-import com.mg.station.station_perso.entity.Jauge;
+import com.mg.station.station_perso.entity.PrelevementCuve;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class JaugeDAO {
 
-    public void create(Jauge jauge) {
+    public void create(PrelevementCuve prelevementCuve) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.persist(jauge);
+            em.persist(prelevementCuve);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -26,30 +26,30 @@ public class JaugeDAO {
         }
     }
 
-    public Jauge read(String id) {
+    public PrelevementCuve read(String id) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            return em.find(Jauge.class, id);
+            return em.find(PrelevementCuve.class, id);
         } finally {
             em.close();
         }
     }
 
-    public List<Jauge> readAll() {
+    public List<PrelevementCuve> readAll() {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
-            return em.createQuery("SELECT j FROM Jauge j", Jauge.class).getResultList();
+            return em.createQuery("SELECT j FROM PrelevementCuve j", PrelevementCuve.class).getResultList();
         } finally {
             em.close();
         }
     }
 
-    public void update(Jauge jauge) {
+    public void update(PrelevementCuve prelevementCuve) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.merge(jauge);
+            em.merge(prelevementCuve);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -66,9 +66,9 @@ public class JaugeDAO {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            Jauge jauge = em.find(Jauge.class, id);
-            if (jauge != null) {
-                em.remove(jauge);
+            PrelevementCuve prelevementCuve = em.find(PrelevementCuve.class, id);
+            if (prelevementCuve != null) {
+                em.remove(prelevementCuve);
             }
             transaction.commit();
         } catch (Exception e) {

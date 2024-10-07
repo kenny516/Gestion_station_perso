@@ -4,7 +4,7 @@ import com.mg.station.station_perso.DAO.JaugeDAO;
 import com.mg.station.station_perso.Database;
 import com.mg.station.station_perso.entity.Cuve;
 import com.mg.station.station_perso.entity.GraduationCuve;
-import com.mg.station.station_perso.entity.Jauge;
+import com.mg.station.station_perso.entity.PrelevementCuve;
 import com.mg.station.station_perso.entity.Pompe;
 
 import javax.persistence.EntityManager;
@@ -46,13 +46,13 @@ public class CuveJaugeServlet extends HttpServlet {
         req.setAttribute("hauteur", jauge);
         req.setAttribute("dateJauge", dateJauge);
 // creation de jauge
-        Jauge jaugePerso = new Jauge();
-        jaugePerso.setHauteurJauge(jauge);
-        jaugePerso.setDaty(dateJauge);
-        jaugePerso.setPompe(pompe);
+        PrelevementCuve prelevementCuvePerso = new PrelevementCuve();
+        prelevementCuvePerso.setHauteurJauge(jauge);
+        prelevementCuvePerso.setDaty(dateJauge);
+        prelevementCuvePerso.setPompe(pompe);
 
         JaugeDAO jaugeDAO = new JaugeDAO();
-        jaugeDAO.create(jaugePerso);
+        jaugeDAO.create(prelevementCuvePerso);
 // redirection vers details cuve
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");

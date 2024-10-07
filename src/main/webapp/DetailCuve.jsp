@@ -21,7 +21,7 @@
 <div>
     <h1>Jauge hauteur: <%=hauteur%> a la date <%=date%>
     </h1>
-    <h1>Capacite entre jauge hauteur :</h1>
+    <h1>Capacite entre prelevementCuve hauteur :</h1>
     <%for (int i = 0; i < graduationCuve.length; i++) {%>
     <p>
         Hauteur = <%= graduationCuve[i].getHauteur()%> et capacite = <%=graduationCuve[i].getVolume()%>

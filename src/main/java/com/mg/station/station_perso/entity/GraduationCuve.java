@@ -59,6 +59,6 @@ public class GraduationCuve extends AbstractPrefixedIdEntity {
 
     @Override
     protected void beforePersist() {
-        id = Database.generateId("GCUV", "ID_CUVE_GRADUATION_SEQ");
+        id = Database.generateId("GCUV", "ID_GRADUATION_CUVE_SEQ");
     }
 }
