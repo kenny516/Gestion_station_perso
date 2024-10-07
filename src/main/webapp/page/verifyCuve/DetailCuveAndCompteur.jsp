@@ -90,5 +90,8 @@
         </table>
     </section>
 </div>
+<H1>Anomalie trouvée => <%= Math.abs(compteurQT - quantiteVendu) %></H1>
+
+
 </body>
 </html>
