@@ -25,6 +25,17 @@ public class Jauge extends AbstractPrefixedIdEntity {
     @JoinColumn(name = "ID_POMPE")
     private Pompe pompe;
 
+    @Transient
+    private double volume;
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -147,17 +158,20 @@ public class Jauge extends AbstractPrefixedIdEntity {
     }
 
 
-    public static double getVolumeByHauteur(CuveGraduation[] cuveGraduations, double hauteur) {
+    public double getVolumeByHauteur(CuveGraduation[] cuveGraduations) {
         double volume = 0;
         if (cuveGraduations.length == 2) {
             double hauteurTemp = cuveGraduations[1].getHauteur() - cuveGraduations[0].getHauteur();
             double capacite = cuveGraduations[1].getCapacite() - cuveGraduations[0].getCapacite();
 
-            double hauteurNewRP = hauteur - cuveGraduations[0].getHauteur();
+            double hauteurNewRP = this.getHauteurJauge() - cuveGraduations[0].getHauteur();
 
             volume = cuveGraduations[0].getCapacite() + (hauteurNewRP * capacite / hauteurTemp);
         } else if (cuveGraduations.length == 1) {
-            volume = cuveGraduations[0].getCapacite() * hauteur / cuveGraduations[0].getHauteur();
+            volume = cuveGraduations[0].getCapacite() * this.getHauteurJauge() / cuveGraduations[0].getHauteur();
+        }
+        if (this.getVolume() == 0 && this.getHauteurJauge() != 0 ){
+            this.setVolume(volume);
         }
         return volume;
     }

@@ -44,12 +44,13 @@ public class AnnomalieDetailServlet extends HttpServlet {
 
         CuveGraduation[] j2 = jauge[1].getCuveGraduationBetween(c.getId());
 
-        double qtNormal1 = Jauge.getVolumeByHauteur(j1, jauge[0].getHauteurJauge());
-        double qtNormal2 = Jauge.getVolumeByHauteur(j2  , jauge[1].getHauteurJauge());
+        double qtNormal1 = jauge[0].getVolumeByHauteur(j1);
+        double qtNormal2 = jauge[1].getVolumeByHauteur(j2);
 
         double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
 
 
+        req.setAttribute("jauge",jauge);
         req.setAttribute("qtNormal1", qtNormal1);
         req.setAttribute("qtNormal2", qtNormal2);
         req.setAttribute("compteurQT", compteurQT);
