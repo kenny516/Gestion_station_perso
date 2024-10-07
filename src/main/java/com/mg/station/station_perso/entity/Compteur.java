@@ -163,13 +163,47 @@ public class Compteur extends AbstractPrefixedIdEntity {
             List compteurs = em.createQuery(sql, Compteur.class)
                     .setParameter("pompe", pompe)
                     .setParameter("date", date)
-                    .setMaxResults(2)
                     .getResultList();
 
-            if (compteurs.size() == 2) {
-                return getFuelSale((Compteur) compteurs.get(1), (Compteur) compteurs.get(0));
+//            if (compteurs.size() == 2) {
+//                return getFuelSale((Compteur) compteurs.get(1), (Compteur) compteurs.get(0));
+//            }
+            double vendue = 0;
+            for (int i = 1; i < compteurs.size(); i++) {
+                vendue += getFuelSale((Compteur) compteurs.get(i), (Compteur) compteurs.get(i - 1));
+                ;
             }
-            return 0;
+            if (!(compteurs.size() % 2 == 0) && compteurs.size() > 1) {
+                vendue += vendue - ((Compteur) compteurs.get(compteurs.size() - 1)).getValeur();
+            }
+            return vendue;
+        } finally {
+            em.close();
+        }
+    }
+
+    public static double getFuelSaleByDateRangeByPompe(Pompe pompe, LocalDateTime startDate, LocalDateTime endDate) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            // Requête JPQL pour récupérer les compteurs entre deux dates
+            String sql = "SELECT c FROM Compteur c " +
+                    "WHERE c.pompe = :pompe " +
+                    "AND c.date BETWEEN :startDate AND :endDate " +
+                    "ORDER BY c.date ASC";
+
+            // Exécution de la requête
+            List<Compteur> compteurs = em.createQuery(sql, Compteur.class)
+                    .setParameter("pompe", pompe)
+                    .setParameter("startDate", startDate)
+                    .setParameter("endDate", endDate)
+                    .getResultList();
+
+            // Calcul de la quantité vendue
+            double vendue = 0;
+            for (int i = 1; i < compteurs.size(); i++) {
+                vendue += getFuelSale(compteurs.get(i-1), compteurs.get(i));
+            }
+            return vendue;
         } finally {
             em.close();
         }

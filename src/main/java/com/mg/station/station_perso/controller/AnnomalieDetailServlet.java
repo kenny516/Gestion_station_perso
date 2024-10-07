@@ -30,12 +30,13 @@ public class AnnomalieDetailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idPompe = req.getParameter("pompe");
         LocalDateTime date = LocalDateTime.parse((req.getParameter("date")));
+        LocalDateTime date2 = LocalDateTime.parse((req.getParameter("date2")));
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         Pompe p = em.find(Pompe.class, idPompe);
 
-        Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
-
+        //Jauge[] jauge = Jauge.getTwoJaugesBeforeAndAfterDateByPompe(p, LocalDate.from(date));
+        Jauge[] jauge = Jauge.getInnerBoundaryJaugesByPompe(p, LocalDate.from(date),LocalDate.from(date2));
 
 
         Cuve c = p.getCuve();
@@ -47,7 +48,8 @@ public class AnnomalieDetailServlet extends HttpServlet {
         double qtNormal1 = jauge[0].getVolumeByHauteur(j1);
         double qtNormal2 = jauge[1].getVolumeByHauteur(j2);
 
-        double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
+        //double compteurQT = Compteur.getFuelSaleByDateByPompe(p, date);
+        double compteurQT = Compteur.getFuelSaleByDateRangeByPompe(p, date,date2);
 
 
         req.setAttribute("jauge",jauge);

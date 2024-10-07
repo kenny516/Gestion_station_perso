@@ -25,8 +25,10 @@
         </option>
         <% } %>
     </select>
-    <label for="date">Date:</label>
+    <label for="date">Date1:</label>
     <input type="datetime-local" id="date" name="date" required>
+    <label for="date2">Date2:</label>
+    <input type="datetime-local" id="date2" name="date2" required>
     <button type="submit">Submit</button>
     <button><a href="index.jsp">Home</a></button>
 </form>

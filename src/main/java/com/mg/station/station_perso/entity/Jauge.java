@@ -97,6 +97,34 @@ public class Jauge extends AbstractPrefixedIdEntity {
         resultList.addAll(afterList);
         return resultList.toArray(new Jauge[0]);
     }
+    public static Jauge[] getInnerBoundaryJaugesByPompe(Pompe pompe, LocalDate startDate, LocalDate endDate) {
+        EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
+
+        try {
+            Jauge firstJauge = em.createQuery("SELECT j FROM Jauge j " +
+                            "WHERE j.pompe = :pompe AND j.daty > :startDate " +
+                            "ORDER BY j.daty ASC", Jauge.class)
+                    .setParameter("pompe", pompe)
+                    .setParameter("startDate", startDate)
+                    .setMaxResults(1)
+                    .getSingleResult();
+
+            Jauge lastJauge = em.createQuery("SELECT j FROM Jauge j " +
+                            "WHERE j.pompe = :pompe AND j.daty < :endDate " +
+                            "ORDER BY j.daty DESC", Jauge.class)
+                    .setParameter("pompe", pompe)
+                    .setParameter("endDate", endDate)
+                    .setMaxResults(1)
+                    .getSingleResult();
+
+            return new Jauge[]{firstJauge, lastJauge};
+
+        } finally {
+            em.close();
+        }
+    }
+
+
 
     //function calculate the volume of fuel in cuve by Height of cuve
     public  CuveGraduation[] getCuveGraduationBetween(String idCuve) {
@@ -175,6 +203,5 @@ public class Jauge extends AbstractPrefixedIdEntity {
         }
         return volume;
     }
-
 
 }
