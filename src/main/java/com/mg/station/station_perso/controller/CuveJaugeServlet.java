@@ -3,7 +3,6 @@ package com.mg.station.station_perso.controller;
 import com.mg.station.station_perso.DAO.JaugeDAO;
 import com.mg.station.station_perso.Database;
 import com.mg.station.station_perso.entity.Cuve;
-import com.mg.station.station_perso.entity.CuveGraduation;
 import com.mg.station.station_perso.entity.Jauge;
 import com.mg.station.station_perso.entity.Pompe;
 
@@ -36,15 +35,15 @@ public class CuveJaugeServlet extends HttpServlet {
 
         Pompe pompe = em.find(Pompe.class, req.getParameter("pompe"));
         Cuve cuve = pompe.getCuve();
-        CuveGraduation[] cuveGraduations = em.createQuery("FROM CuveGraduation cg WHERE cg.cuve = :cuve", CuveGraduation.class)
-                .setParameter("cuve", cuve)
-                .getResultList().toArray(new CuveGraduation[0]);
-
-        double volumeCalc = cuve.getVolumeByHauteur(cuveGraduations, jauge);
-        req.setAttribute("cuveGraduation", cuveGraduations);
-        req.setAttribute("capaciteCalculer", volumeCalc);
-        req.setAttribute("hauteur", jauge);
-        req.setAttribute("dateJauge", dateJauge);
+//        CuveGraduation[] cuveGraduations = em.createQuery("FROM CuveGraduation cg WHERE cg.cuve = :cuve", CuveGraduation.class)
+//                .setParameter("cuve", cuve)
+//                .getResultList().toArray(new CuveGraduation[0]);
+//
+//        double volumeCalc = Jauge.getVolumeByHauteur(cuveGraduations, jauge);
+//        req.setAttribute("cuveGraduation", cuveGraduations);
+//        req.setAttribute("capaciteCalculer", volumeCalc);
+//        req.setAttribute("hauteur", jauge);
+//        req.setAttribute("dateJauge", dateJauge);
 // creation de jauge
         Jauge jaugePerso = new Jauge();
         jaugePerso.setHauteurJauge(jauge);
