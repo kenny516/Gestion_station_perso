@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/bdd/data.sql" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/bdd/script.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/bdd/seeder.sql" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/mg/station/station_perso/entity/Compteur.java" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/mg/station/station_perso/entity/Cuve.java" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/mg/station/station_perso/entity/Vente.java" dialect="Oracle" />
+    <file url="PROJECT" dialect="Oracle" />
   </component>
 </project>

@@ -42,8 +42,8 @@ public class Test extends HttpServlet {
         Cuve c = p.getCuve();
 
 
-        CuveGraduation[] j1 = c.getCuveGraduationBetween(jauge[0].getHauteurJauge());
-        CuveGraduation[] j2 = c.getCuveGraduationBetween(jauge[1].getHauteurJauge());
+        GraduationCuve[] j1 = c.getCuveGraduationBetween(jauge[0].getHauteurJauge());
+        GraduationCuve[] j2 = c.getCuveGraduationBetween(jauge[1].getHauteurJauge());
 
         resp.getWriter().println("j1 "+j1.length+"\n");
         resp.getWriter().println("j2 "+j2.length+"\n");

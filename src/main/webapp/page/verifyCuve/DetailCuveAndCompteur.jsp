@@ -1,5 +1,5 @@
 <%@ page import="com.mg.station.station_perso.entity.Compteur" %>
-<%@ page import="com.mg.station.station_perso.entity.CuveGraduation" %>
+<%@ page import="com.mg.station.station_perso.entity.GraduationCuve" %>
 <%@ page import="com.mg.station.station_perso.entity.Pompe" %><%--
   Created by IntelliJ IDEA.
   User: kenny

@@ -73,10 +73,10 @@ public class Cuve extends AbstractPrefixedIdEntity {
     }
 
 
-    //function calculate the volume of fuel in cuve by Height of cuve
-    public CuveGraduation[] getCuveGraduationBetween(double hauteur) {
+    // function calculate the volume of fuel in cuve by Height of cuve
+    public GraduationCuve[] getCuveGraduationBetween(double hauteur) {
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
-        List<CuveGraduation> result = new ArrayList<>(); // Use generics for type safety
+        List<GraduationCuve> result = new ArrayList<>(); // Use generics for type safety
 
         try {
 
@@ -87,13 +87,13 @@ public class Cuve extends AbstractPrefixedIdEntity {
                     "   ORDER BY c.hauteur DESC " +
                     ") WHERE ROWNUM = 1";
 
-            List beforeGraduations = em.createNativeQuery(queryBefore, CuveGraduation.class)
+            List beforeGraduations = em.createNativeQuery(queryBefore, GraduationCuve.class)
                     .setParameter("cuveId", this.getId())
                     .setParameter("hauteur", hauteur)
                     .getResultList();
 
             if (!beforeGraduations.isEmpty()) {
-                result.add((CuveGraduation) beforeGraduations.get(0)); // Assign the found graduation below
+                result.add((GraduationCuve) beforeGraduations.get(0)); // Assign the found graduation below
             }
 
             // Second Query: Get closest graduation above the specified hauteur
@@ -103,13 +103,13 @@ public class Cuve extends AbstractPrefixedIdEntity {
                     "   ORDER BY c.hauteur ASC " +
                     ") WHERE ROWNUM = 1";
 
-            List afterGraduations = em.createNativeQuery(queryAfter, CuveGraduation.class)
+            List afterGraduations = em.createNativeQuery(queryAfter, GraduationCuve.class)
                     .setParameter("cuveId", this.getId())
                     .setParameter("hauteur", hauteur)
                     .getResultList();
 
             if (!afterGraduations.isEmpty()) {
-                result.add((CuveGraduation) afterGraduations.get(0)); // Assign the found graduation above
+                result.add((GraduationCuve) afterGraduations.get(0)); // Assign the found graduation above
             }
 
         } catch (Exception e) {
@@ -120,18 +120,18 @@ public class Cuve extends AbstractPrefixedIdEntity {
             em.close(); // Ensure the EntityManager is closed
         }
 
-        return result.toArray(new CuveGraduation[0]); // Return the array containing both graduations
+        return result.toArray(new GraduationCuve[0]); // Return the array containing both graduations
     }
 
 
-    public double getVolumeByHauteur(CuveGraduation[] cuveGraduations, double hauteur) {
+    public double getVolumeByHauteur(GraduationCuve[] graduationCuves, double hauteur) {
         double volume = 0;
-        if (cuveGraduations.length == 2) {
-            double rg3one = cuveGraduations[0].getCapacite() * hauteur / cuveGraduations[0].getHauteur();
-            double rg3two = cuveGraduations[1].getCapacite() * hauteur / cuveGraduations[1].getHauteur();
+        if (graduationCuves.length == 2) {
+            double rg3one = graduationCuves[0].getVolume() * hauteur / graduationCuves[0].getHauteur();
+            double rg3two = graduationCuves[1].getVolume() * hauteur / graduationCuves[1].getHauteur();
             volume = (rg3one + rg3two) / 2;
-        } else if (cuveGraduations.length == 1) {
-            volume = cuveGraduations[0].getCapacite() * hauteur / cuveGraduations[0].getHauteur();
+        } else if (graduationCuves.length == 1) {
+            volume = graduationCuves[0].getVolume() * hauteur / graduationCuves[0].getHauteur();
         }
         return volume;
     }

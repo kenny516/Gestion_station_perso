@@ -1,5 +1,3 @@
-<%@ page import="vente.Vente" %>
-<%@ page import="faturefournisseur.Fournisseur" %>
 <%@ page import="faturefournisseur.FactureFournisseur" %>
 <%@ page import="vente.VenteDetails" %>
 <%@ page import="faturefournisseur.FactureFournisseurDetails" %><%--

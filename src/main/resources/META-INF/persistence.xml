@@ -6,22 +6,20 @@
              version="2.1">
     <persistence-unit name="default">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
         <class>com.mg.station.station_perso.entity.Pompiste</class>
         <class>com.mg.station.station_perso.entity.Pompe</class>
         <class>com.mg.station.station_perso.entity.Compteur</class>
         <class>com.mg.station.station_perso.entity.Cuve</class>
         <class>com.mg.station.station_perso.entity.Vente</class>
         <class>com.mg.station.station_perso.entity.Jauge</class>
-        <class>com.mg.station.station_perso.entity.CuveGraduation</class>
+        <class>com.mg.station.station_perso.entity.GraduationCuve</class>
         <class>com.mg.station.station_perso.entity.Achat</class>
-
-
-
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:ORCL"/>
-            <property name="javax.persistence.jdbc.user" value="kenny"/>
-            <property name="javax.persistence.jdbc.password" value="your_password"/>
+            <property name="javax.persistence.jdbc.user" value="station"/>
+            <property name="javax.persistence.jdbc.password" value="station"/>
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
