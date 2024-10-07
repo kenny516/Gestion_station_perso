@@ -28,7 +28,7 @@
     <label for="dateJauge">Date de jauge</label>
     <input type="date" id="dateJauge" name="dateJauge">
     <label for="hauteur">Hauteur jauge</label>
-    <input type="number" id="hauteur" name="hauteur">
+    <input type="number" step="any" id="hauteur" name="hauteur">
     <button type="submit">Submit</button>
     <button><a href="index.jsp">Home</a></button>
 </form>

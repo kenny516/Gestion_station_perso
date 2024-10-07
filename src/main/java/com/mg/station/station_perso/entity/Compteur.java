@@ -191,7 +191,6 @@ public class Compteur extends AbstractPrefixedIdEntity {
                     "AND c.date BETWEEN :startDate AND :endDate " +
                     "ORDER BY c.date ASC";
 
-            // Exécution de la requête
             List<Compteur> compteurs = em.createQuery(sql, Compteur.class)
                     .setParameter("pompe", pompe)
                     .setParameter("startDate", startDate)

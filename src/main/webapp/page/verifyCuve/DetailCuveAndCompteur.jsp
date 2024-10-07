@@ -1,19 +1,17 @@
 <%@ page import="com.mg.station.station_perso.entity.Jauge" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    // Safely retrieve and validate request attributes
     Double qtNormal1 = (Double) request.getAttribute("qtNormal1");
     Double qtNormal2 = (Double) request.getAttribute("qtNormal2");
     Double compteurQT = (Double) request.getAttribute("compteurQT");
 
     Jauge[] jauges = (Jauge[]) request.getAttribute("jauge");
 
-    // Set default values if attributes are null
+    // 0 si null
     qtNormal1 = (qtNormal1 != null) ? qtNormal1 : 0.0;
     qtNormal2 = (qtNormal2 != null) ? qtNormal2 : 0.0;
     compteurQT = (compteurQT != null) ? compteurQT : 0.0;
 
-    // Calculate the difference
     double quantiteVendu = qtNormal1 - qtNormal2;
 %>
 <html lang="en">

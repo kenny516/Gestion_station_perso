@@ -54,6 +54,11 @@ public class CuveJaugeServlet extends HttpServlet {
         req.setAttribute("hauteur", jauge);
         req.setAttribute("dateJauge", dateJauge);
 
+        CuveGraduation[] cvg = jaugePerso.getCuveGraduationBetween(pompe.getCuve().getId());
+        double volume = jaugePerso.getVolumeByHauteur(cvg);
+
+        resp.getWriter().println(" Hauteur = "+jauge);
+        resp.getWriter().println(" Volume = "+volume);
 //        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
 //        dispatcher.forward(req, resp);
     }
