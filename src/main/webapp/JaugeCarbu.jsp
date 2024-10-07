@@ -30,6 +30,7 @@
     <label for="hauteur">Hauteur prelevementCuve</label>
     <input type="number" id="hauteur" name="hauteur">
     <button type="submit">Submit</button>
+    <button><a href="index.jsp">Home</a></button>
 </form>
 
 </body>

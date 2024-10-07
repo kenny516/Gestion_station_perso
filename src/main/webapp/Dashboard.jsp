@@ -36,9 +36,9 @@
         <tr>
             <td><%= v.getId() %>
             </td>
-            <td><%= v.get() %>
+            <td><%= v.getDaterempli() %>
             </td>
-            <td><%= v.getMontantttc() %>
+            <td><%= v.getMontant() %>
             </td>
         </tr>
         <% } %>
@@ -49,12 +49,12 @@
             <th>nom</th>
             <th>solde</th>
         </tr>
-        <% for (FactureFournisseur f : facfournisseurs) { %>
+        <% for (FactureFournisseurDetails f : facfournisseurs) { %>
         <tr>
             <td><%= f.getId() %>
             </td>
-            <td><%=f.getFournisseurlib()%></td>
-            <td><%= f.getFactureWithMontant(null).getMontantttc() %>
+            <td><%=f.getIdFactureFournisseur()%></td>
+            <td><%= f.getMontantTTC() %>
             </td>
         </tr>
         <% } %>

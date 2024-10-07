@@ -1,34 +1,43 @@
-<%@ page import="com.mg.station.station_perso.entity.Compteur" %>
-<%@ page import="com.mg.station.station_perso.entity.GraduationCuve" %>
-<%@ page import="com.mg.station.station_perso.entity.Pompe" %><%--
-  Created by IntelliJ IDEA.
-  User: kenny
-  Date: 05/10/2024
-  Time: 14:12
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    double qtNormal1 = (double) request.getAttribute("qtNormal1");
-    double qtNormal2 = (double) request.getAttribute("qtNormal2");
-    double compteurQT = (double) request.getAttribute("compteurQT");
+    // Retrieve and validate request attributes safely
+    Double qtNormal1 = (Double) request.getAttribute("qtNormal1");
+    Double qtNormal2 = (Double) request.getAttribute("qtNormal2");
+    Double compteurQT = (Double) request.getAttribute("compteurQT");
 
+    // Default values if attributes are null
+    qtNormal1 = (qtNormal1 != null) ? qtNormal1 : 0.0;
+    qtNormal2 = (qtNormal2 != null) ? qtNormal2 : 0.0;
+    compteurQT = (compteurQT != null) ? compteurQT : 0.0;
+
+    // Calculate the difference
+    double quantiteVendu = qtNormal1 - qtNormal2;
 %>
 <html>
 <head>
-    <link rel="stylesheet" href="assets/compteur.css">
+    <meta charset="UTF-8">
     <title>Detail cuve and compteur</title>
+    <link rel="stylesheet" href="../../assets/DetailJauge.css">
 </head>
 <body>
-<div>
-    <h1>Detail cuve and compteur</h1>
+<div class="container">
+    <header>
+        <h1>Details of Cuve and Compteur</h1>
+    </header>
 
-    <h2>JAUGE QT 1: <%= qtNormal1 %></h2>
-    <h2>JAUGE QT 2: <%= qtNormal2 %></h2>
+    <section class="details">
+        <article class="jauge-info">
+            <h2>JAUGE Details</h2>
+            <p>JAUGE before: <strong><%= String.format("%.2f", qtNormal1) %></strong></p>
+            <p>JAUGE after: <strong><%= String.format("%.2f", qtNormal2) %></strong></p>
+            <p>Quantity sold (by jauge): <strong><%= String.format("%.2f", quantiteVendu) %></strong></p>
+        </article>
 
-    <h2>QT normal :<%= qtNormal1-qtNormal2 %></h2>
-    <h2>Compteur QT: <%= compteurQT %></h2>
-
-
+        <article class="compteur-info">
+            <h2>Compteur Details</h2>
+            <p>Compteur Quantity: <strong><%= String.format("%.2f", compteurQT) %></strong></p>
+        </article>
+    </section>
+</div>
 </body>
 </html>
