@@ -69,6 +69,7 @@ public class Cuve extends AbstractPrefixedIdEntity {
 
     @Override
     protected void beforePersist() {
+
         id = Database.generateId("CUV", "ID_CUVE_SEQ");
     }
 
