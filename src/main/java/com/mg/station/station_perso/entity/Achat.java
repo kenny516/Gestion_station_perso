@@ -34,18 +34,16 @@ public class Achat extends AbstractPrefixedIdEntity {
         return id;
     }
 
-    public Achat setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     public String getRefFournisseur() {
         return refFournisseur;
     }
 
-    public Achat setRefFournisseur(String refFournisseur) {
+    public void setRefFournisseur(String refFournisseur) {
         this.refFournisseur = refFournisseur;
-        return this;
     }
 
     public Cuve getCuve() {
@@ -61,27 +59,24 @@ public class Achat extends AbstractPrefixedIdEntity {
         return quantite;
     }
 
-    public Achat setQuantite(double quantite) {
+    public void setQuantite(double quantite) {
         this.quantite = quantite;
-        return this;
     }
 
     public double getMontant() {
         return montant;
     }
 
-    public Achat setMontant(double montant) {
+    public void setMontant(double montant) {
         this.montant = montant;
-        return this;
     }
 
     public LocalDate getDaty() {
         return daty;
     }
 
-    public Achat setDaty(LocalDate daty) {
+    public void setDaty(LocalDate daty) {
         this.daty = daty;
-        return this;
     }
 
     @Override

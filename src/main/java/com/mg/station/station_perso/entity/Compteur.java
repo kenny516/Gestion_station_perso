@@ -32,45 +32,40 @@ public class Compteur extends AbstractPrefixedIdEntity {
         return id;
     }
 
-    public Compteur setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     public Pompe getPompe() {
         return pompe;
     }
 
-    public Compteur setPompe(Pompe pompe) {
+    public void setPompe(Pompe pompe) {
         this.pompe = pompe;
-        return this;
     }
 
     public Pompiste getPompiste() {
         return pompiste;
     }
 
-    public Compteur setPompiste(Pompiste pompiste) {
+    public void setPompiste(Pompiste pompiste) {
         this.pompiste = pompiste;
-        return this;
     }
 
     public double getValeur() {
         return valeur;
     }
 
-    public Compteur setValeur(double valeur) {
+    public void setValeur(double valeur) {
         this.valeur = valeur;
-        return this;
     }
 
     public LocalDateTime getDate() {
         return date;
     }
 
-    public Compteur setDate(LocalDateTime date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
-        return this;
     }
 
     @Override
