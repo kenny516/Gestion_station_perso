@@ -52,7 +52,6 @@ public class AchatServlet extends HttpServlet {
 
         EntityManager em = Database.ENTITY_MANAGER_FACTORY.createEntityManager();
         AchatDAO achatDAO = new AchatDAO();
-
         try {
             Pompe p = em.find(Pompe.class, idPompe);
             Cuve c = p.getCuve();
@@ -65,7 +64,7 @@ public class AchatServlet extends HttpServlet {
 
             achatDAO.create(achat);
 
-            stationServiceEJB.nouvelleFactureFOurnisseur(c.getRef_magasin(),achat.getMontant(),achat.getDaty());
+            stationServiceEJB.nouvelleFactureFOurnisseur(quantite,c.getRef_magasin(),achat.getMontant(),achat.getDaty());
         } finally {
             em.close();
         }

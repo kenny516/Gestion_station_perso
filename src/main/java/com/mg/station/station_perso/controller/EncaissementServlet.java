@@ -54,6 +54,8 @@ public class EncaissementServlet extends HttpServlet {
         VenteDAO venteDAO = new VenteDAO();
         venteDAO.create(vente);
 
+        stationServiceEJB.nouvelleVenteCarburant(quantiteRestant, 12, "CLI000105",refMagasin, daty);
+
         if (quantiteRestant - quantite > 0) {
             req.setAttribute("date",req.getParameter("daty"));
             req.setAttribute("RefMagasin",refMagasin);
